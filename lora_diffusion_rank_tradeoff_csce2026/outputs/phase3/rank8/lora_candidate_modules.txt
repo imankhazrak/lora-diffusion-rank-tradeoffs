@@ -1,6 +1,0 @@
-down_blocks.4.attentions.0
-down_blocks.4.attentions.1
-mid_block.attentions.0
-up_blocks.1.attentions.0
-up_blocks.1.attentions.1
-up_blocks.1.attentions.2

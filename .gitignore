@@ -5,3 +5,7 @@ lora_diffusion_rank_tradeoff_csce2026/external/diffusers/
 # Generated training artifacts that exceed GitHub limits.
 lora_diffusion_rank_tradeoff_csce2026/outputs/**/unet/diffusion_pytorch_model.safetensors
 lora_diffusion_rank_tradeoff_csce2026/outputs/**/optimizer.bin
+
+# Generated run outputs (checkpoints, samples, model snapshots).
+lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/
+lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/
