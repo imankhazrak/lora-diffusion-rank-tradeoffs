@@ -1,0 +1,38 @@
+== Phase 3 rank sweep ==
+Project root: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+Timestamp (UTC): 2026-05-24T21:14:26Z
+Hostname: p0227.ten.osc.edu
+
+===== Running rank 2 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank2.yaml) =====
+Training complete for rank 2. Running FID...
+ERROR: FID failed for rank 2 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank2.log
+
+===== Running rank 4 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank4.yaml) =====
+Training complete for rank 4. Running FID...
+ERROR: FID failed for rank 4 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank4.log
+
+===== Running rank 8 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank8.yaml) =====
+Training complete for rank 8. Running FID...
+ERROR: FID failed for rank 8 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank8.log
+
+===== Running rank 16 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank16.yaml) =====
+Training complete for rank 16. Running FID...
+ERROR: FID failed for rank 16 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank16.log
+
+===== Running rank 32 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank32.yaml) =====
+scripts/run_rank_sweep.sh: line 41: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank32.log: Disk quota exceeded
+ERROR: training failed for rank 32 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank32.log
+
+== Aggregating metrics and generating outputs ==
+Traceback (most recent call last):
+  File "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/aggregate_phase3_results.py", line 104, in <module>
+    main()
+  File "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/aggregate_phase3_results.py", line 82, in main
+    with out_csv.open("w", newline="", encoding="utf-8") as f:
+  File "/usr/lib64/python3.9/pathlib.py", line 1180, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/usr/lib64/python3.9/pathlib.py", line 1038, in _opener
+    return self._accessor.open(self, flags, mode)
+OSError: [Errno 122] Disk quota exceeded: '/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/rank_sweep_results.csv'
+(self, flags, mode)
+OSError: [Errno 122] Disk quota exceeded: '/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/rank_sweep_results.csv'

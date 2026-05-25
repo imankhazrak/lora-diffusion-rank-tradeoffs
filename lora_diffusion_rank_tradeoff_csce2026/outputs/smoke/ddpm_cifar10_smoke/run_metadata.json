@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-05-24T19:59:32.806800+00:00",
+  "git_commit_hash": "8f98676",
+  "hostname": "p0227.ten.osc.edu",
+  "platform": "Linux-5.14.0-570.103.1.el9_6.x86_64-x86_64-with-glibc2.34",
+  "gpu_name": "Tesla V100-PCIE-16GB",
+  "cuda_available": true,
+  "cuda_version": "12.8",
+  "pytorch_version": "2.8.0+cu128",
+  "diffusers_version": "0.36.0",
+  "accelerate_version": "1.10.1",
+  "dataset": "cifar10",
+  "hyperparameters": {
+    "resolution": 32,
+    "batch_size": 64,
+    "num_epochs": 1,
+    "learning_rate": 0.0001,
+    "mixed_precision": "fp16",
+    "seed": 42
+  },
+  "runtime_seconds": 176,
+  "max_gpu_memory_mb_observed": 3922
+}

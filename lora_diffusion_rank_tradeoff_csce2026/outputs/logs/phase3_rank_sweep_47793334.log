@@ -1,0 +1,103 @@
+========== JOB START ==========
+SLURM_JOB_ID=47793334
+SLURM_NODELIST=p0227
+SLURM_SUBMIT_DIR=/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+CUDA_VISIBLE_DEVICES=0
+START_UTC=2026-05-24T21:14:20Z
+Lmod has detected the following error: These module(s) or extension(s) exist
+but cannot be loaded as requested: "miniconda3"
+
+   You encountered this error for one of the following reasons:
+   1. Missing version specification: On Pitzer, you must specify an available
+version.
+   2. Missing required modules: Ensure you have loaded the appropriate compiler
+and MPI modules.
+
+   Try: "module spider miniconda3" to view available versions or required
+modules.
+
+   If you need further assistance, please contact oschelp@osc.edu with the
+subject line "lmod error: miniconda3"
+
+
+
+WARNING: module load miniconda3 failed.
+
+EnvironmentNameNotFound: Could not find conda environment: lora_diffusion_csce
+You can list all discoverable environments with `conda info --envs`.
+
+
+WARNING: conda activate failed; using current python.
+========== SYSTEM INFO ==========
+p0227.ten.osc.edu
+Sun May 24 05:14:21 PM EDT 2026
+/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+========== GPU INFO ==========
+Sun May 24 17:14:21 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.95.05              Driver Version: 580.95.05      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla V100-PCIE-16GB           On  |   00000000:3B:00.0 Off |                  Off |
+| N/A   22C    P0             25W /  250W |       0MiB /  16384MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+========== CUDA INFO ==========
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2024 NVIDIA Corporation
+Built on Thu_Mar_28_02:18:24_PDT_2024
+Cuda compilation tools, release 12.4, V12.4.131
+Build cuda_12.4.r12.4/compiler.34097967_0
+========== PYTORCH CUDA ==========
+True
+Tesla V100-PCIE-16GB
+========== RUNTIME ENV ==========
+OMP_NUM_THREADS=4
+PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+== Phase 3 rank sweep ==
+Project root: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+Timestamp (UTC): 2026-05-24T21:14:26Z
+Hostname: p0227.ten.osc.edu
+
+===== Running rank 2 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank2.yaml) =====
+Training complete for rank 2. Running FID...
+ERROR: FID failed for rank 2 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank2.log
+
+===== Running rank 4 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank4.yaml) =====
+Training complete for rank 4. Running FID...
+ERROR: FID failed for rank 4 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank4.log
+
+===== Running rank 8 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank8.yaml) =====
+Training complete for rank 8. Running FID...
+ERROR: FID failed for rank 8 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank8.log
+
+===== Running rank 16 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank16.yaml) =====
+Training complete for rank 16. Running FID...
+ERROR: FID failed for rank 16 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank16.log
+
+===== Running rank 32 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank32.yaml) =====
+scripts/run_rank_sweep.sh: line 41: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank32.log: Disk quota exceeded
+ERROR: training failed for rank 32 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/rank_sweep/rank32.log
+
+== Aggregating metrics and generating outputs ==
+Traceback (most recent call last):
+  File "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/aggregate_phase3_results.py", line 104, in <module>
+    main()
+  File "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/aggregate_phase3_results.py", line 82, in main
+    with out_csv.open("w", newline="", encoding="utf-8") as f:
+  File "/usr/lib64/python3.9/pathlib.py", line 1180, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/usr/lib64/python3.9/pathlib.py", line 1038, in _opener
+    return self._accessor.open(self, flags, mode)
+OSError: [Errno 122] Disk quota exceeded: '/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/rank_sweep_results.csv'

@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "Output directory exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/ddpm_cifar10_smoke"
+    },
+    {
+      "name": "Generated samples directory exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/ddpm_cifar10_smoke/generated_samples"
+    },
+    {
+      "name": "At least one PNG sample exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "Checkpoint directory exists",
+      "status": "PASS",
+      "detail": "found=['checkpoint-1000']"
+    },
+    {
+      "name": "UNet weights exist",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/ddpm_cifar10_smoke/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "Scheduler config exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/ddpm_cifar10_smoke/scheduler/scheduler_config.json"
+    },
+    {
+      "name": "TensorBoard logs exist",
+      "status": "PASS",
+      "detail": "count=3 in /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/ddpm_cifar10_smoke/logs"
+    },
+    {
+      "name": "Smoke log exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/phase1_smoke.log"
+    },
+    {
+      "name": "No NaN in log",
+      "status": "PASS",
+      "detail": "clean"
+    }
+  ],
+  "failure_reasons": []
+}

@@ -1,0 +1,16 @@
+{
+  "model": "DDPM_UNet2D_with_LoRA",
+  "total_parameters": 113722371,
+  "trainable_parameters": 49152,
+  "percent_trainable": 0.043221,
+  "target_modules": [
+    "to_q",
+    "to_k",
+    "to_v",
+    "to_out.0"
+  ],
+  "rank": 2,
+  "alpha": 2,
+  "dropout": 0.0,
+  "timestamp_utc": "2026-05-24T21:14:40.443586+00:00"
+}

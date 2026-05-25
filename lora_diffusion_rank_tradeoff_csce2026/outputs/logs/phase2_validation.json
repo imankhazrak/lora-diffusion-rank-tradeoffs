@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "Output directory exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke"
+    },
+    {
+      "name": "Generated sample directory exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke/generated_samples"
+    },
+    {
+      "name": "Generated sample PNG exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "LoRA adapter directory exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke/lora_adapter"
+    },
+    {
+      "name": "LoRA adapter weights exist",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke/lora_adapter"
+    },
+    {
+      "name": "LoRA adapter config exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke/lora_adapter"
+    },
+    {
+      "name": "Checkpoint directory exists",
+      "status": "PASS",
+      "detail": "found=['checkpoint-782']"
+    },
+    {
+      "name": "UNet weights exist",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "Scheduler config exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/smoke/lora_rank4_smoke/scheduler/scheduler_config.json"
+    },
+    {
+      "name": "TensorBoard logs exist",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "Parameter JSON report exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/lora_parameter_report.json"
+    },
+    {
+      "name": "Parameter Markdown report exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/lora_parameter_report.md"
+    },
+    {
+      "name": "Freeze check report exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/lora_freeze_check.txt"
+    },
+    {
+      "name": "Candidate modules report exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/lora_candidate_modules.txt"
+    },
+    {
+      "name": "Training metrics JSON exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/phase2_training_metrics.json"
+    },
+    {
+      "name": "Phase2 smoke log exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/phase2_lora_smoke.log"
+    },
+    {
+      "name": "Freeze check status PASS",
+      "status": "PASS",
+      "detail": "FREEZE_CHECK_STATUS token"
+    },
+    {
+      "name": "No NaN losses in log",
+      "status": "PASS",
+      "detail": "clean"
+    }
+  ],
+  "failure_reasons": []
+}

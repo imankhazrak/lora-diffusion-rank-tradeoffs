@@ -1,0 +1,7 @@
+# Prevent nested git repos from being staged as embedded repos.
+diffusers_v036/
+lora_diffusion_rank_tradeoff_csce2026/external/diffusers/
+
+# Generated training artifacts that exceed GitHub limits.
+lora_diffusion_rank_tradeoff_csce2026/outputs/**/unet/diffusion_pytorch_model.safetensors
+lora_diffusion_rank_tradeoff_csce2026/outputs/**/optimizer.bin
