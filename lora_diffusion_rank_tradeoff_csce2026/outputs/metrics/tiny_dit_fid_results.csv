@@ -1,0 +1,4 @@
+rank,fid,num_eval_images,protocol,status,error_stage,error,eval_dir,timestamp_utc
+4,383.243837,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/eval_samples_2k,2026-05-26T04:11:32.946300+00:00
+8,387.806960,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/eval_samples_2k,2026-05-26T04:23:47.914090+00:00
+16,402.033505,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/eval_samples_2k,2026-05-26T04:36:02.150351+00:00

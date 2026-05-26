@@ -1,0 +1,80 @@
+Lmod has detected the following error: These module(s) or extension(s) exist
+but cannot be loaded as requested: "miniconda3"
+
+   You encountered this error for one of the following reasons:
+   1. Missing version specification: On Pitzer, you must specify an available
+version.
+   2. Missing required modules: Ensure you have loaded the appropriate compiler
+and MPI modules.
+
+   Try: "module spider miniconda3" to view available versions or required
+modules.
+
+   If you need further assistance, please contact oschelp@osc.edu with the
+subject line "lmod error: miniconda3"
+
+
+
+WARNING: module load miniconda3 failed.
+
+EnvironmentNameNotFound: Could not find conda environment: lora_diffusion_csce
+You can list all discoverable environments with `conda info --envs`.
+
+
+WARNING: conda activate failed; using current python.
+== Extended-budget DDPM validation ==
+START_UTC=2026-05-26T03:29:01Z
+== Extended-budget DDPM validation ==
+Project root: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+Timestamp (UTC): 2026-05-26T03:29:01Z
+Hostname: p0237.ten.osc.edu
+
+===== Running rank4_20epoch (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/extended_budget/rank4_20epoch.yaml) =====
+Training complete for rank4_20epoch. Running FID...
+rank4_20epoch completed successfully.
+
+===== Running rank8_20epoch (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/extended_budget/rank8_20epoch.yaml) =====
+Training complete for rank8_20epoch. Running FID...
+rank8_20epoch completed successfully.
+
+===== Running rank16_20epoch (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/extended_budget/rank16_20epoch.yaml) =====
+Training complete for rank16_20epoch. Running FID...
+rank16_20epoch completed successfully.
+
+== Aggregating and validating extended-budget outputs ==
+Wrote aggregate metrics: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/extended_budget_results.csv
+Generated extended-budget figures in: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures
+PASS: Extended-budget config count - count=3
+PASS: rank4 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank4_20epoch
+PASS: rank4 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank4_20epoch/generated_samples/sample_000.png
+PASS: rank4 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank4_20epoch/eval_samples_2k
+PASS: rank4 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank4_20epoch/lora_adapter/adapter_model.safetensors
+PASS: rank4 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank4_20epoch/training_metrics.json
+PASS: rank4 no NaN in metrics - clean
+PASS: rank8 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank8_20epoch
+PASS: rank8 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank8_20epoch/generated_samples/sample_000.png
+PASS: rank8 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank8_20epoch/eval_samples_2k
+PASS: rank8 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank8_20epoch/lora_adapter/adapter_model.safetensors
+PASS: rank8 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank8_20epoch/training_metrics.json
+PASS: rank8 no NaN in metrics - clean
+PASS: rank16 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank16_20epoch
+PASS: rank16 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank16_20epoch/generated_samples/sample_000.png
+PASS: rank16 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank16_20epoch/eval_samples_2k
+PASS: rank16 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank16_20epoch/lora_adapter/adapter_model.safetensors
+PASS: rank16 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/extended_budget/rank16_20epoch/training_metrics.json
+PASS: rank16 no NaN in metrics - clean
+PASS: extended_budget_results.csv exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/extended_budget_results.csv
+PASS: extended_budget_fid_results.csv exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/extended_budget_fid_results.csv
+PASS: extended-budget FID rows complete for ranks 4/8/16 - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/extended_budget_fid_results.csv
+PASS: figure extended_budget_fid_vs_rank.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/extended_budget_fid_vs_rank.png
+PASS: figure ddpm_fid_10_vs_20_epoch.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/ddpm_fid_10_vs_20_epoch.png
+PASS: figure extended_budget_runtime_vs_rank.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/extended_budget_runtime_vs_rank.png
+PASS: figure extended_budget_training_loss_curves.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/extended_budget_training_loss_curves.png
+
+EXTENDED-BUDGET VALIDATION RESULT: PASS
+Validation JSON written: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/extended_budget_validation.json
+
+Completed ranks: rank4_20epoch rank8_20epoch rank16_20epoch
+Failed ranks: none
+Summary log: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/extended_budget.log
+END_UTC=2026-05-26T04:27:46Z

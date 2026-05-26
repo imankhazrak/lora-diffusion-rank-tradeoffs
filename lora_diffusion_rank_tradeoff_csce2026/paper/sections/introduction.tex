@@ -1,0 +1,24 @@
+\section{Introduction}
+
+Diffusion models have become a dominant framework for image generation, but adapting them to new domains or tasks through full fine-tuning remains computationally expensive. Updating all backbone parameters can require substantial memory, runtime, and experimentation cost, making deployment difficult in constrained research and engineering environments. Parameter-efficient fine-tuning (PEFT) methods address this limitation by updating only a small subset of model parameters while keeping most pretrained weights frozen. Among PEFT approaches, LoRA has become especially attractive because it introduces lightweight low-rank updates that are easy to integrate into existing architectures and expose a direct rank parameter that controls adaptation capacity \cite{hu2022lora}.
+
+Despite its practical popularity, selecting the LoRA rank remains an under-specified engineering decision in diffusion fine-tuning. Very small ranks can limit representational flexibility and adaptation capacity, while larger ranks increase trainable parameters, runtime, and memory usage without guaranteeing improved generation quality. In many practical settings, LoRA configurations are chosen under constrained computational budgets rather than through exhaustive hyperparameter optimization. Consequently, there is a need for controlled empirical evidence that clarifies how LoRA rank affects the trade-off between parameter efficiency, optimization behavior, and relative image-quality metrics during diffusion adaptation.
+
+This work presents a reproducible empirical study of LoRA rank trade-offs under controlled diffusion fine-tuning budgets. Our primary experiment evaluates a DDPM U-Net backbone on CIFAR-10 using LoRA ranks $r \in \{2,4,8,16,32\}$ under fixed optimization settings. To test whether the observed trends remain stable beyond a single configuration, we additionally conduct two focused validation studies: an extended-budget DDPM experiment using ranks $r \in \{4,8,16\}$ trained for additional epochs, and a lightweight Tiny DiT validation using the same rank set on a second diffusion backbone. Across all experiments, we report trainable parameter counts, runtime, GPU memory usage, final training loss, and Fr\'echet Inception Distance (FID) computed using a reproducible local-folder \texttt{pytorch-fid} evaluation protocol.
+
+A central design choice of this study is that optimization settings are intentionally kept fixed across ranks. This allows the experiments to isolate the effect of LoRA rank under a controlled training budget rather than comparing independently tuned rank-specific configurations. As a result, the findings should be interpreted as evidence about practical budgeted adaptation behavior rather than universal claims regarding optimal LoRA rank across all architectures, datasets, and optimization regimes.
+
+\paragraph{Contributions.}
+The main contributions of this work are summarized as follows:
+
+\begin{itemize}
+    \item We present a controlled LoRA rank sweep for diffusion fine-tuning on CIFAR-10 using a DDPM U-Net backbone with ranks $r \in \{2,4,8,16,32\}$ under unified optimization settings.
+
+    \item We analyze efficiency-quality trade-offs across LoRA ranks using trainable parameter counts, runtime, GPU memory usage, training loss, and FID under a reproducible local evaluation protocol.
+
+    \item We conduct an extended-budget DDPM validation to examine whether larger ranks benefit substantially from additional optimization steps.
+
+    \item We perform a lightweight Tiny DiT second-backbone validation to evaluate whether observed rank trends remain consistent beyond a single DDPM architecture.
+
+    \item We provide a reproducible PEFT diffusion experimentation pipeline with automated artifact generation, validation, and evaluation workflows.
+\end{itemize}

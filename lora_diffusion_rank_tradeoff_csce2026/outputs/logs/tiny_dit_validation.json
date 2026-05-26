@@ -1,0 +1,151 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "Tiny DiT config count",
+      "status": "PASS",
+      "detail": "count=3"
+    },
+    {
+      "name": "rank4 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4"
+    },
+    {
+      "name": "rank4 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/generated_samples"
+    },
+    {
+      "name": "rank4 eval_samples_2k exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/eval_samples_2k"
+    },
+    {
+      "name": "rank4 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank4 merged transformer exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/transformer/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank4 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/training_metrics.json"
+    },
+    {
+      "name": "rank4 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "rank8 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8"
+    },
+    {
+      "name": "rank8 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/generated_samples"
+    },
+    {
+      "name": "rank8 eval_samples_2k exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/eval_samples_2k"
+    },
+    {
+      "name": "rank8 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank8 merged transformer exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/transformer/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank8 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/training_metrics.json"
+    },
+    {
+      "name": "rank8 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "rank16 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16"
+    },
+    {
+      "name": "rank16 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/generated_samples"
+    },
+    {
+      "name": "rank16 eval_samples_2k exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/eval_samples_2k"
+    },
+    {
+      "name": "rank16 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank16 merged transformer exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/transformer/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank16 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/training_metrics.json"
+    },
+    {
+      "name": "rank16 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "tiny_dit_results.csv exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_results.csv"
+    },
+    {
+      "name": "tiny_dit_fid_results.csv exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv"
+    },
+    {
+      "name": "tiny DiT FID rows complete for ranks 4/8/16",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv"
+    },
+    {
+      "name": "figure tiny_dit_fid_vs_rank.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_fid_vs_rank.png"
+    },
+    {
+      "name": "figure tiny_dit_runtime_vs_rank.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_runtime_vs_rank.png"
+    },
+    {
+      "name": "figure tiny_dit_training_loss_curves.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_training_loss_curves.png"
+    },
+    {
+      "name": "figure ddpm_vs_tiny_dit_fid_rank4_8_16.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/ddpm_vs_tiny_dit_fid_rank4_8_16.png"
+    }
+  ],
+  "failure_reasons": []
+}

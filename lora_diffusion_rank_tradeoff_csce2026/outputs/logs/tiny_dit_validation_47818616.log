@@ -1,0 +1,48 @@
+Lmod has detected the following error: These module(s) or extension(s) exist
+but cannot be loaded as requested: "miniconda3"
+
+   You encountered this error for one of the following reasons:
+   1. Missing version specification: On Pitzer, you must specify an available
+version.
+   2. Missing required modules: Ensure you have loaded the appropriate compiler
+and MPI modules.
+
+   Try: "module spider miniconda3" to view available versions or required
+modules.
+
+   If you need further assistance, please contact oschelp@osc.edu with the
+subject line "lmod error: miniconda3"
+
+
+
+WARNING: module load miniconda3 failed.
+
+EnvironmentNameNotFound: Could not find conda environment: lora_diffusion_csce
+You can list all discoverable environments with `conda info --envs`.
+
+
+WARNING: conda activate failed; using current python.
+== Tiny DiT validation ==
+START_UTC=2026-05-26T03:29:01Z
+== Tiny DiT validation ==
+Project root: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+Timestamp (UTC): 2026-05-26T03:29:01Z
+Hostname: p0254.ten.osc.edu
+
+===== Running rank4 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank4.yaml) =====
+ERROR: tiny DiT training failed for rank4 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit/rank4.log
+
+===== Running rank8 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank8.yaml) =====
+ERROR: tiny DiT training failed for rank8 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit/rank8.log
+
+===== Running rank16 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank16.yaml) =====
+ERROR: tiny DiT training failed for rank16 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit/rank16.log
+
+== Aggregating and validating tiny DiT outputs ==
+Wrote tiny DiT aggregate metrics: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_results.csv
+Traceback (most recent call last):
+  File "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/generate_tiny_dit_figures.py", line 121, in <module>
+    main()
+  File "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/generate_tiny_dit_figures.py", line 40, in main
+    raise FileNotFoundError(f"Missing extended-budget CSV: {ddpm20_csv}")
+FileNotFoundError: Missing extended-budget CSV: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/extended_budget_results.csv

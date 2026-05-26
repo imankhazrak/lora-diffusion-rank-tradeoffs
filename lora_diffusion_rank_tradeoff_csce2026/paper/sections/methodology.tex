@@ -1,0 +1,17 @@
+\section{Methodology}
+
+\subsection{Study Design}
+
+The study is organized into three controlled experiment tracks. The primary track conducts a full DDPM rank sweep over $r \in \{2, 4, 8, 16, 32\}$ for 10 epochs, establishing the baseline efficiency-quality profile across the evaluated rank range. The second track extends the DDPM training budget to 20 epochs for a subset of ranks $r \in \{4, 8, 16\}$, testing whether larger ranks recover quality advantages with additional optimization steps. The third track applies the same 10-epoch protocol to a lightweight Tiny DiT backbone at ranks $r \in \{4, 8, 16\}$, assessing whether the rank-ordering pattern observed in the primary DDPM sweep persists under a structurally different architecture. All three tracks use CIFAR-10 at $32 \times 32$ resolution and share identical core optimization settings: batch size 64 and learning rate $10^{-4}$.
+
+\subsection{LoRA Injection and Parameter Freezing}
+
+LoRA adapters are injected into the attention projection modules of each target backbone, specifically the query, key, value, and output projections (\texttt{to\_q}, \texttt{to\_k}, \texttt{to\_v}, \texttt{to\_out.0}). All base model parameters are frozen throughout training, and only the LoRA adapter matrices are updated via gradient descent. For each experimental run, we record both total and trainable parameter counts directly from run artifacts, allowing precise verification that parameter scaling across ranks follows the expected LoRA parameterization in Equation~\ref{eq:lora}.
+
+\subsection{Evaluation Protocol}
+
+Generation quality is assessed using the Fr\'{e}chet Inception Distance (FID)~\cite{heusel2017fid}, computed with \texttt{pytorch-fid} against a fixed local CIFAR-10 test reference set stored at \texttt{outputs/fid\_reference/cifar10\_test}. To maintain evaluation consistency across all tracks and ranks, FID is computed from 2000 generated images per run. Using a local reference folder reduces dependence on externally cached reference statistics and makes the evaluation protocol easier to reproduce in cluster environments. In addition to FID, we record final training loss, wall-clock runtime, and peak GPU memory consumption from training artifacts, providing a joint view of relative generation quality and systems efficiency for each rank configuration.
+
+\subsection{Controlled-Optimization Positioning}
+
+A central design decision in this study is the deliberate choice to hold all optimization settings fixed across ranks. This means that differences in FID across ranks reflect the effect of rank under a uniform training budget, rather than the outcome of rank-specific hyperparameter search. As a consequence, results should be interpreted as controlled within-budget comparisons: they characterize which rank configurations make the most efficient use of a fixed compute allocation, not which ranks would perform best given tailored optimization. This framing is carried consistently through all experimental tracks and is fundamental to the interpretation of the findings reported in Section~\ref{sec:results_discussion}.

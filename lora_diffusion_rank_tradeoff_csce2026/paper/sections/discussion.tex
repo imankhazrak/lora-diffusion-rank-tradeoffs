@@ -1,0 +1,17 @@
+\section{Discussion}
+
+Our findings indicate that LoRA rank should be treated as a budgeted systems decision rather than a ``larger is always better'' scaling knob. In this controlled setting, moderate ranks (especially 4, with 8 close behind) repeatedly provide stronger quality-efficiency outcomes than larger ranks.
+
+\paragraph{Practical implications.}
+For practitioners tuning diffusion models under finite compute:
+\begin{itemize}[leftmargin=1.5em]
+  \item Start with moderate LoRA ranks before allocating resources to large-rank sweeps.
+  \item Track both quality and systems metrics (runtime, memory), not FID alone.
+  \item Preserve fixed-baseline comparisons when making deployment-facing decisions.
+\end{itemize}
+
+\paragraph{Reproducibility implications.}
+The study highlights the importance of explicit artifact pipelines: rank-specific configs, local reference data for FID, scriptable validation, and report generation. This lowers the risk of hidden evaluation drift and simplifies reviewer-facing reproducibility.
+
+\paragraph{Interpreting diminishing returns.}
+Under constrained and fixed optimization budgets, increasing rank can increase trainable capacity faster than optimization opportunity, yielding weak or negative marginal quality gains. This does not imply high ranks are universally ineffective; rather, it suggests that larger ranks may require different budgets and/or tuning regimes to realize potential gains.

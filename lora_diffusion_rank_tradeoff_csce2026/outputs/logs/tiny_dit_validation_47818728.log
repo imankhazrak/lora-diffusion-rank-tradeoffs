@@ -1,0 +1,91 @@
+Lmod has detected the following error: These module(s) or extension(s) exist
+but cannot be loaded as requested: "miniconda3"
+
+   You encountered this error for one of the following reasons:
+   1. Missing version specification: On Pitzer, you must specify an available
+version.
+   2. Missing required modules: Ensure you have loaded the appropriate compiler
+and MPI modules.
+
+   Try: "module spider miniconda3" to view available versions or required
+modules.
+
+   If you need further assistance, please contact oschelp@osc.edu with the
+subject line "lmod error: miniconda3"
+
+
+
+WARNING: module load miniconda3 failed.
+
+EnvironmentNameNotFound: Could not find conda environment: lora_diffusion_csce
+You can list all discoverable environments with `conda info --envs`.
+
+
+WARNING: conda activate failed; using current python.
+== Tiny DiT validation ==
+START_UTC=2026-05-26T03:32:59Z
+== Tiny DiT validation ==
+Project root: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+Timestamp (UTC): 2026-05-26T03:32:59Z
+Hostname: p0247.ten.osc.edu
+
+===== Running rank4 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank4.yaml) =====
+ERROR: tiny DiT training failed for rank4 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit/rank4.log
+
+===== Running rank8 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank8.yaml) =====
+ERROR: tiny DiT training failed for rank8 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit/rank8.log
+
+===== Running rank16 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank16.yaml) =====
+ERROR: tiny DiT training failed for rank16 (rc=1). See /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit/rank16.log
+
+== Aggregating and validating tiny DiT outputs ==
+Wrote tiny DiT aggregate metrics: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_results.csv
+/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/scripts/generate_tiny_dit_figures.py:92: UserWarning: No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+  ax.legend()
+Generated tiny DiT figures in: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures
+PASS: Tiny DiT config count - count=3
+PASS: rank4 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4
+FAIL: rank4 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/generated_samples
+FAIL: rank4 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/eval_samples_2k
+FAIL: rank4 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/lora_adapter/adapter_model.safetensors
+FAIL: rank4 merged transformer exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/transformer/diffusion_pytorch_model.safetensors
+FAIL: rank4 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/training_metrics.json
+PASS: rank8 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8
+FAIL: rank8 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/generated_samples
+FAIL: rank8 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/eval_samples_2k
+FAIL: rank8 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/lora_adapter/adapter_model.safetensors
+FAIL: rank8 merged transformer exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/transformer/diffusion_pytorch_model.safetensors
+FAIL: rank8 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/training_metrics.json
+PASS: rank16 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16
+FAIL: rank16 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/generated_samples
+FAIL: rank16 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/eval_samples_2k
+FAIL: rank16 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/lora_adapter/adapter_model.safetensors
+FAIL: rank16 merged transformer exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/transformer/diffusion_pytorch_model.safetensors
+FAIL: rank16 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/training_metrics.json
+PASS: tiny_dit_results.csv exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_results.csv
+FAIL: tiny_dit_fid_results.csv exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv
+FAIL: tiny DiT FID rows complete for ranks 4/8/16 - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv
+PASS: figure tiny_dit_fid_vs_rank.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_fid_vs_rank.png
+PASS: figure tiny_dit_runtime_vs_rank.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_runtime_vs_rank.png
+PASS: figure tiny_dit_training_loss_curves.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_training_loss_curves.png
+
+TINY DIT VALIDATION RESULT: FAIL
+Failure reasons:
+- rank4 sample image exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/generated_samples
+- rank4 eval_samples_2k exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/eval_samples_2k
+- rank4 LoRA adapter exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/lora_adapter/adapter_model.safetensors
+- rank4 merged transformer exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/transformer/diffusion_pytorch_model.safetensors
+- rank4 training_metrics exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/training_metrics.json
+- rank8 sample image exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/generated_samples
+- rank8 eval_samples_2k exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/eval_samples_2k
+- rank8 LoRA adapter exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/lora_adapter/adapter_model.safetensors
+- rank8 merged transformer exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/transformer/diffusion_pytorch_model.safetensors
+- rank8 training_metrics exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/training_metrics.json
+- rank16 sample image exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/generated_samples
+- rank16 eval_samples_2k exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/eval_samples_2k
+- rank16 LoRA adapter exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/lora_adapter/adapter_model.safetensors
+- rank16 merged transformer exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/transformer/diffusion_pytorch_model.safetensors
+- rank16 training_metrics exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/training_metrics.json
+- tiny_dit_fid_results.csv exists: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv
+- tiny DiT FID rows complete for ranks 4/8/16: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv
+Validation JSON written: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit_validation.json

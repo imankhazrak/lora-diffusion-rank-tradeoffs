@@ -1,0 +1,30 @@
+\section{Experimental Setup}
+
+\subsection{Environment and Stack}
+Experiments were executed on OSC via SLURM with GPU-backed jobs. The implementation stack uses PyTorch, Diffusers \cite{vonplaten2022diffusers}, PEFT/LoRA \cite{hu2022lora}, and Hugging Face datasets tooling. Artifacts are generated through scripted pipelines with validation and reporting steps.
+
+\subsection{Data and Backbones}
+\textbf{Dataset:} CIFAR-10 \cite{krizhevsky2009cifar}, resolution \(32\times32\).\\
+\textbf{Primary backbone:} DDPM U-Net \cite{ho2020ddpm}.\\
+\textbf{Validation backbone:} lightweight Tiny DiT-style \texttt{Transformer2DModel} inspired by diffusion transformers \cite{peebles2023dit}.
+
+\subsection{Training Configuration}
+Across tracks, we keep the optimizer policy fixed for controlled rank analysis:
+\begin{itemize}[leftmargin=1.5em]
+  \item Batch size: 64
+  \item Learning rate: \(1\times10^{-4}\)
+  \item Rank-specific LoRA adapters only are trainable
+  \item Main sweep epochs: 10
+  \item Extended-budget epochs: 20
+  \item Tiny DiT validation epochs: 10
+\end{itemize}
+
+\subsection{Reported Metrics}
+For each run we report:
+\begin{itemize}[leftmargin=1.5em]
+  \item FID (\texttt{pytorch-fid}, local CIFAR-10 test reference, 2000 generated images)
+  \item Trainable parameter count and percentage
+  \item Runtime (seconds) and average epoch time
+  \item Peak GPU memory usage (MB)
+  \item Final training loss
+\end{itemize}

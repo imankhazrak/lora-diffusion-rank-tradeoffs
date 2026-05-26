@@ -9,6 +9,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 import yaml
+from matplotlib.ticker import FuncFormatter
 from PIL import Image
 
 
@@ -57,6 +58,9 @@ def main():
     ax.set_xlabel("Trainable Parameters")
     ax.set_ylabel("FID")
     ax.set_title("FID vs Trainable Parameters")
+    ax.xaxis.set_major_formatter(
+        FuncFormatter(lambda x, _: f"{int(x / 1000)}k" if x >= 1000 else f"{int(x)}")
+    )
     ax.grid(True, alpha=0.3)
     save_plot(fig, fig_dir / "fid_vs_trainable_params.png")
 

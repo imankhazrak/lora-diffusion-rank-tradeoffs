@@ -1,0 +1,41 @@
+LoRA Freeze Verification
+timestamp_utc: 2026-05-26T03:59:21.554007+00:00
+frozen_param_tensors: 58
+trainable_param_tensors: 32
+only_lora_trainable: True
+
+Trainable parameter names:
+base_model.model.transformer_blocks.0.attn1.to_k.lora_A.default.weight
+base_model.model.transformer_blocks.0.attn1.to_k.lora_B.default.weight
+base_model.model.transformer_blocks.0.attn1.to_out.0.lora_A.default.weight
+base_model.model.transformer_blocks.0.attn1.to_out.0.lora_B.default.weight
+base_model.model.transformer_blocks.0.attn1.to_q.lora_A.default.weight
+base_model.model.transformer_blocks.0.attn1.to_q.lora_B.default.weight
+base_model.model.transformer_blocks.0.attn1.to_v.lora_A.default.weight
+base_model.model.transformer_blocks.0.attn1.to_v.lora_B.default.weight
+base_model.model.transformer_blocks.1.attn1.to_k.lora_A.default.weight
+base_model.model.transformer_blocks.1.attn1.to_k.lora_B.default.weight
+base_model.model.transformer_blocks.1.attn1.to_out.0.lora_A.default.weight
+base_model.model.transformer_blocks.1.attn1.to_out.0.lora_B.default.weight
+base_model.model.transformer_blocks.1.attn1.to_q.lora_A.default.weight
+base_model.model.transformer_blocks.1.attn1.to_q.lora_B.default.weight
+base_model.model.transformer_blocks.1.attn1.to_v.lora_A.default.weight
+base_model.model.transformer_blocks.1.attn1.to_v.lora_B.default.weight
+base_model.model.transformer_blocks.2.attn1.to_k.lora_A.default.weight
+base_model.model.transformer_blocks.2.attn1.to_k.lora_B.default.weight
+base_model.model.transformer_blocks.2.attn1.to_out.0.lora_A.default.weight
+base_model.model.transformer_blocks.2.attn1.to_out.0.lora_B.default.weight
+base_model.model.transformer_blocks.2.attn1.to_q.lora_A.default.weight
+base_model.model.transformer_blocks.2.attn1.to_q.lora_B.default.weight
+base_model.model.transformer_blocks.2.attn1.to_v.lora_A.default.weight
+base_model.model.transformer_blocks.2.attn1.to_v.lora_B.default.weight
+base_model.model.transformer_blocks.3.attn1.to_k.lora_A.default.weight
+base_model.model.transformer_blocks.3.attn1.to_k.lora_B.default.weight
+base_model.model.transformer_blocks.3.attn1.to_out.0.lora_A.default.weight
+base_model.model.transformer_blocks.3.attn1.to_out.0.lora_B.default.weight
+base_model.model.transformer_blocks.3.attn1.to_q.lora_A.default.weight
+base_model.model.transformer_blocks.3.attn1.to_q.lora_B.default.weight
+base_model.model.transformer_blocks.3.attn1.to_v.lora_A.default.weight
+base_model.model.transformer_blocks.3.attn1.to_v.lora_B.default.weight
+
+FREEZE_CHECK_STATUS: PASS

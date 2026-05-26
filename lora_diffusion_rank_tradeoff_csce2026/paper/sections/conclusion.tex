@@ -1,0 +1,7 @@
+\section{Conclusion}
+
+We presented a reproducible empirical study of LoRA rank trade-offs in diffusion fine-tuning under controlled training budgets. In the main DDPM sweep, moderate ranks (4 and 8) provided the strongest quality-efficiency outcomes, while larger ranks showed diminishing returns relative to increased trainable parameter cost. Extended-budget DDPM validation improved rank 16 only modestly, and Tiny DiT validation showed a similar rank-ordering trend.
+
+These results support a practical recommendation for budget-constrained diffusion adaptation: small-to-moderate LoRA ranks are strong default choices when optimization settings are fixed and reproducibility is prioritized.
+
+Future work should evaluate adaptive rank allocation, rank-specific optimizer tuning, larger backbones, and broader datasets to determine how these trends evolve at scale.

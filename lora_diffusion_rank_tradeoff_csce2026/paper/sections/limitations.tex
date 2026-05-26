@@ -1,0 +1,13 @@
+\section{Limitations}
+
+This study is intentionally scoped as a controlled empirical engineering analysis, and has several important limitations:
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Dataset scope:} all experiments use CIFAR-10 only.
+  \item \textbf{Backbone scale:} we evaluate a DDPM U-Net and a lightweight Tiny DiT, not large-scale foundation backbones.
+  \item \textbf{Training budgets:} epochs and evaluation sample counts are bounded for reproducibility and resource control.
+  \item \textbf{Fixed optimization settings:} we do not perform rank-specific optimizer retuning.
+  \item \textbf{No exhaustive HPO:} the study does not search full hyperparameter spaces per rank.
+  \item \textbf{No universal scaling-law claim:} results should not be interpreted as general laws across datasets, architectures, or compute scales.
+\end{itemize}
+
+These limitations are deliberate trade-offs to preserve controlled comparisons and reproducibility. They should be considered when transferring conclusions to broader settings.

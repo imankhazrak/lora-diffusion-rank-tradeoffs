@@ -1,0 +1,226 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "Rank config files present",
+      "status": "PASS",
+      "detail": "count=5"
+    },
+    {
+      "name": "rank2 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank2"
+    },
+    {
+      "name": "rank2 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank2/generated_samples/sample_000.png"
+    },
+    {
+      "name": "rank2 checkpoint exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "rank2 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank2/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank2 merged UNet exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank2/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank2 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank2/training_metrics.json"
+    },
+    {
+      "name": "rank2 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "rank4 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank4"
+    },
+    {
+      "name": "rank4 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank4/generated_samples/sample_000.png"
+    },
+    {
+      "name": "rank4 checkpoint exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "rank4 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank4/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank4 merged UNet exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank4/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank4 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank4/training_metrics.json"
+    },
+    {
+      "name": "rank4 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "rank8 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8"
+    },
+    {
+      "name": "rank8 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/generated_samples/sample_000.png"
+    },
+    {
+      "name": "rank8 checkpoint exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "rank8 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank8 merged UNet exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank8 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/training_metrics.json"
+    },
+    {
+      "name": "rank8 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "rank16 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16"
+    },
+    {
+      "name": "rank16 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/generated_samples/sample_000.png"
+    },
+    {
+      "name": "rank16 checkpoint exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "rank16 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank16 merged UNet exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank16 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/training_metrics.json"
+    },
+    {
+      "name": "rank16 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "rank32 output dir exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank32"
+    },
+    {
+      "name": "rank32 sample image exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank32/generated_samples/sample_000.png"
+    },
+    {
+      "name": "rank32 checkpoint exists",
+      "status": "PASS",
+      "detail": "count=1"
+    },
+    {
+      "name": "rank32 LoRA adapter exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank32/lora_adapter/adapter_model.safetensors"
+    },
+    {
+      "name": "rank32 merged UNet exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank32/unet/diffusion_pytorch_model.safetensors"
+    },
+    {
+      "name": "rank32 training_metrics exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank32/training_metrics.json"
+    },
+    {
+      "name": "rank32 no NaN in metrics",
+      "status": "PASS",
+      "detail": "clean"
+    },
+    {
+      "name": "fid_results.csv exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/fid_results.csv"
+    },
+    {
+      "name": "rank_sweep_results.csv exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/rank_sweep_results.csv"
+    },
+    {
+      "name": "figure fid_vs_rank.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/fid_vs_rank.png"
+    },
+    {
+      "name": "figure fid_vs_trainable_params.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/fid_vs_trainable_params.png"
+    },
+    {
+      "name": "figure runtime_vs_rank.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/runtime_vs_rank.png"
+    },
+    {
+      "name": "figure gpu_memory_vs_rank.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/gpu_memory_vs_rank.png"
+    },
+    {
+      "name": "figure training_loss_curves.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/training_loss_curves.png"
+    },
+    {
+      "name": "figure rank_sample_comparison.png exists",
+      "status": "PASS",
+      "detail": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/rank_sample_comparison.png"
+    }
+  ],
+  "failure_reasons": []
+}

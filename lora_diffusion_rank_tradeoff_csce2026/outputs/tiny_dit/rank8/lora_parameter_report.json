@@ -1,0 +1,16 @@
+{
+  "model": "TinyDiT_Transformer2D_with_LoRA",
+  "total_parameters": 1089417,
+  "trainable_parameters": 32768,
+  "percent_trainable": 3.007847,
+  "target_modules": [
+    "to_q",
+    "to_k",
+    "to_v",
+    "to_out.0"
+  ],
+  "rank": 8,
+  "alpha": 8,
+  "dropout": 0.0,
+  "timestamp_utc": "2026-05-26T04:11:45.457072+00:00"
+}

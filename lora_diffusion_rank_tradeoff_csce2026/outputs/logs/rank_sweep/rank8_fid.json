@@ -1,0 +1,22 @@
+{
+  "rank": 8,
+  "config_path": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/rank_sweep/rank8.yaml",
+  "output_dir": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8",
+  "eval_dir": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/eval_samples_10k",
+  "num_gen": 2000,
+  "force_regenerate": false,
+  "skip_if_existing": true,
+  "started_at_utc": "2026-05-25T20:46:51.300295+00:00",
+  "reference_dir": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/fid_reference/cifar10_test",
+  "result": {
+    "rank": 8,
+    "fid": "124.213620",
+    "num_eval_images": 2000,
+    "protocol": "pytorch-fid:local-cifar10-test:dims2048",
+    "status": "PASS",
+    "error_stage": "",
+    "error": "",
+    "eval_dir": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/eval_samples_10k",
+    "timestamp_utc": "2026-05-25T20:47:26.560460+00:00"
+  }
+}

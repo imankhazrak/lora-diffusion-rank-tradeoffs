@@ -1,0 +1,10 @@
+{
+  "extended_budget_status": "PASS",
+  "tiny_dit_status": "PASS",
+  "overall_status": "PASS",
+  "rank16_ddpm_10epoch_fid": 132.254947,
+  "rank16_ddpm_20epoch_fid": 131.355512,
+  "rank16_tiny_dit_10epoch_fid": 402.033505,
+  "rank16_substantial_ddpm_improvement": false,
+  "similar_trend_across_backbones": true
+}

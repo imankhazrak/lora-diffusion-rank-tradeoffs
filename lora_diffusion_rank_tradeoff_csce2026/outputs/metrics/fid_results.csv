@@ -1,5 +1,10 @@
-rank,fid,num_eval_images,protocol,status,error,timestamp_utc
-2,,10000,clean-fid:cifar10:test:10k,FAIL,No module named 'cleanfid',2026-05-24T21:23:42.346243+00:00
-4,,10000,clean-fid:cifar10:test:10k,FAIL,<urlopen error [Errno -3] Temporary failure in name resolution>,2026-05-24T21:32:52.876369+00:00
-8,,10000,clean-fid:cifar10:test:10k,FAIL,<urlopen error [Errno -3] Temporary failure in name resolution>,2026-05-24T21:47:45.053984+00:00
-16,,10000,clean-fid:cifar10:test:10k,FAIL,[Errno 122] Disk quota exceeded: '/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/eval_samples_10k/sample_01576.png',2026-05-24T22:02:32.993807+00:00
+rank,fid,num_eval_images,protocol,status,error_stage,error,eval_dir,timestamp_utc
+2,131.415373,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank2/eval_samples_2k,2026-05-25T20:45:52.633032+00:00
+2,,10000,clean-fid:cifar10:test:10k,FAIL,,No module named 'cleanfid',,2026-05-24T21:23:42.346243+00:00
+4,124.138043,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank4/eval_samples_10k,2026-05-25T20:46:39.151830+00:00
+4,,10000,clean-fid:cifar10:test:10k,FAIL,,<urlopen error [Errno -3] Temporary failure in name resolution>,,2026-05-24T21:32:52.876369+00:00
+8,124.213620,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank8/eval_samples_10k,2026-05-25T20:47:26.560460+00:00
+8,,10000,clean-fid:cifar10:test:10k,FAIL,,<urlopen error [Errno -3] Temporary failure in name resolution>,,2026-05-24T21:47:45.053984+00:00
+16,132.254947,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/eval_samples_2k,2026-05-25T20:49:13.296225+00:00
+16,,10000,clean-fid:cifar10:test:10k,FAIL,,[Errno 122] Disk quota exceeded: '/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank16/eval_samples_10k/sample_01576.png',,2026-05-24T22:02:32.993807+00:00
+32,131.647877,2000,pytorch-fid:local-cifar10-test:dims2048,PASS,,,/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/phase3/rank32/eval_samples_2k,2026-05-25T22:03:19.702657+00:00

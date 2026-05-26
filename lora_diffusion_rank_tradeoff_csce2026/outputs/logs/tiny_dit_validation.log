@@ -1,0 +1,56 @@
+== Tiny DiT validation ==
+Project root: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026
+Timestamp (UTC): 2026-05-26T03:59:02Z
+Hostname: p0228.ten.osc.edu
+
+===== Running rank4 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank4.yaml) =====
+Training complete for rank4. Running FID on pre-generated eval_samples_2k...
+rank4 completed successfully.
+
+===== Running rank8 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank8.yaml) =====
+Training complete for rank8. Running FID on pre-generated eval_samples_2k...
+rank8 completed successfully.
+
+===== Running rank16 (/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/configs/tiny_dit/rank16.yaml) =====
+Training complete for rank16. Running FID on pre-generated eval_samples_2k...
+rank16 completed successfully.
+
+== Aggregating and validating tiny DiT outputs ==
+Wrote tiny DiT aggregate metrics: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_results.csv
+Generated tiny DiT figures in: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures
+PASS: Tiny DiT config count - count=3
+PASS: rank4 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4
+PASS: rank4 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/generated_samples
+PASS: rank4 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/eval_samples_2k
+PASS: rank4 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/lora_adapter/adapter_model.safetensors
+PASS: rank4 merged transformer exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/transformer/diffusion_pytorch_model.safetensors
+PASS: rank4 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank4/training_metrics.json
+PASS: rank4 no NaN in metrics - clean
+PASS: rank8 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8
+PASS: rank8 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/generated_samples
+PASS: rank8 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/eval_samples_2k
+PASS: rank8 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/lora_adapter/adapter_model.safetensors
+PASS: rank8 merged transformer exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/transformer/diffusion_pytorch_model.safetensors
+PASS: rank8 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank8/training_metrics.json
+PASS: rank8 no NaN in metrics - clean
+PASS: rank16 output dir exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16
+PASS: rank16 sample image exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/generated_samples
+PASS: rank16 eval_samples_2k exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/eval_samples_2k
+PASS: rank16 LoRA adapter exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/lora_adapter/adapter_model.safetensors
+PASS: rank16 merged transformer exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/transformer/diffusion_pytorch_model.safetensors
+PASS: rank16 training_metrics exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/tiny_dit/rank16/training_metrics.json
+PASS: rank16 no NaN in metrics - clean
+PASS: tiny_dit_results.csv exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_results.csv
+PASS: tiny_dit_fid_results.csv exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv
+PASS: tiny DiT FID rows complete for ranks 4/8/16 - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/metrics/tiny_dit_fid_results.csv
+PASS: figure tiny_dit_fid_vs_rank.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_fid_vs_rank.png
+PASS: figure tiny_dit_runtime_vs_rank.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_runtime_vs_rank.png
+PASS: figure tiny_dit_training_loss_curves.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/tiny_dit_training_loss_curves.png
+PASS: figure ddpm_vs_tiny_dit_fid_rank4_8_16.png exists - /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/figures/ddpm_vs_tiny_dit_fid_rank4_8_16.png
+
+TINY DIT VALIDATION RESULT: PASS
+Validation JSON written: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit_validation.json
+
+Completed ranks: rank4 rank8 rank16
+Failed ranks: none
+Summary log: /users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/logs/tiny_dit_validation.log

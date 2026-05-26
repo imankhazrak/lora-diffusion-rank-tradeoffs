@@ -1,0 +1,14 @@
+{
+  "timestamp_utc": "2026-05-25T20:29:03.665048+00:00",
+  "selected_rank": 2,
+  "num_generated": 100,
+  "generated_dir": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/fid_verification/rank2/generated_100",
+  "pytorch_fid_import_status": "PASS",
+  "reference_status": "READY",
+  "reference_dir": "/users/PCS0229/imankhazrak/lora-diffusion-rank-tradeoffs/lora_diffusion_rank_tradeoff_csce2026/outputs/fid_reference/cifar10_test",
+  "fid_value": 221.70411354448234,
+  "runtime_seconds": 54337.683,
+  "warnings": [],
+  "errors": [],
+  "final_status": "PASS"
+}

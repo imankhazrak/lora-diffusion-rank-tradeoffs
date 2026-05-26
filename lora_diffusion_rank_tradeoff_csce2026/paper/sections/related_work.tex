@@ -1,0 +1,55 @@
+\section{Related Work}
+
+Denoising diffusion probabilistic models (DDPMs) establish a likelihood-based generative
+framework in which a neural network learns to iteratively reverse a fixed Gaussian noising
+process applied to training data \cite{ho2020ddpm}. Since their introduction, diffusion models
+have expanded considerably in both scale and architectural diversity, with transformer-based
+backbones such as the Diffusion Transformer (DiT) demonstrating strong performance on
+class-conditional image generation \cite{peebles2023dit}. The present work does not propose a
+new diffusion architecture; rather, it examines practical fine-tuning behavior under fixed
+training budgets, using established backbones as controlled experimental platforms.
+
+Parameter-efficient fine-tuning (PEFT) methods reduce adaptation cost by confining gradient
+updates to a small subset of model parameters. Early approaches introduced lightweight adapter
+modules inserted between frozen transformer layers \cite{houlsby2019adapters}, while prompt-based
+tuning methods condition frozen models through learned input representations
+\cite{lester2021prompt}. LoRA offers a complementary formulation: rather than inserting new
+modules, it augments frozen weight matrices with trainable low-rank factors that can be folded
+back into the base weights at inference \cite{hu2022lora}. The rank parameter $r$ provides
+direct, interpretable control over adaptation capacity, making LoRA a natural candidate for
+systematic efficiency-quality trade-off analysis under fixed compute budgets.
+
+A growing body of work has examined the limitations of static, uniform rank assignment in LoRA.
+AdaLoRA \cite{zhang2023adalora} reparameterizes weight updates via singular value decomposition
+and dynamically prunes less important singular values based on layer-wise importance scores,
+allowing rank to adapt to the varying adaptation demands of different modules. Subsequent
+methods have built on this direction: ElaLoRA \cite{chang2025elalora} enables both rank pruning
+and expansion during training via gradient-derived importance estimates, while ARD-LoRA
+\cite{ardlora2025} targets heterogeneous adaptation requirements across individual attention heads
+rather than layers. Separately, rsLoRA \cite{kalajdzievski2023rslora} identifies a theoretical
+limitation in the standard LoRA scaling factor, showing that the conventional $\alpha/r$
+normalization causes gradient magnitude to collapse as rank increases, and proposes a corrected
+$\alpha/\sqrt{r}$ scaling that stabilizes learning at higher ranks without additional inference
+cost. More recently, timestep-dependent rank adaptation has been explored for diffusion model
+personalization: T-LoRA \cite{soboleva2025tlora} demonstrates that higher diffusion timesteps
+are disproportionately prone to overfitting, motivating rank schedules that vary with the
+denoising trajectory.
+
+While these adaptive and rank-aware methods represent important advances, they introduce
+additional complexity---in the form of dynamic schedules, importance scoring, or modified
+optimization regimes---that can obscure the baseline relationship between fixed rank and
+adaptation quality. Our study deliberately occupies a complementary position: rather than
+proposing a new rank-selection mechanism, we provide controlled empirical evidence of how
+static rank choices interact with training budget under uniform optimization settings. This
+evidence is directly relevant for practitioners who require reproducible baselines before
+committing to more complex adaptive strategies.
+
+Open-source frameworks have substantially lowered the barrier to reproducible diffusion
+experimentation. Hugging Face Diffusers \cite{vonplaten2022diffusers} provides consistent
+implementations of models and noise schedulers across a wide range of architectures, enabling
+fair cross-study comparisons. Evaluation of generative quality commonly relies on the
+Fr\'{e}chet Inception Distance (FID) \cite{heusel2017fid}, while CIFAR-10 remains a widely
+used controlled benchmark that facilitates rapid and resource-efficient comparative studies
+\cite{krizhevsky2009cifar}. The present study builds directly on these foundations, employing a
+local \texttt{pytorch-fid} protocol with a fixed CIFAR-10 test reference to ensure evaluation
+consistency across all experimental tracks.
