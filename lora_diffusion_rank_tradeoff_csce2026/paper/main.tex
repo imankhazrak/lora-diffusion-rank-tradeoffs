@@ -113,6 +113,19 @@
     \item A reproducible PEFT diffusion experimentation pipeline with explicit artifact
     generation, scriptable validation, and structured reporting outputs.
   \end{itemize}
+
+  Figure~\ref{fig:graphical_abstract} provides an overview of the experimental workflow and the primary findings of the study. The results show that moderate LoRA ranks consistently provide the strongest efficiency--quality trade-off under fixed optimization budgets.
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\textwidth]{../outputs/figures/lora_workflow.png}
+\caption{
+Overview of the controlled evaluation framework for LoRA rank trade-offs in diffusion model fine-tuning. Multiple LoRA ranks are evaluated across DDPM and Tiny DiT backbones under fixed optimization budgets, showing that moderate ranks provide the most favorable efficiency--quality balance.
+}
+\label{fig:graphical_abstract}
+\end{figure*}
+
+The remainder of this paper is organized as follows. Section~2 reviews related work on diffusion models and parameter-efficient fine-tuning. Section~3 introduces the problem formulation and technical background. Section~4 presents the methodology and controlled experimental design. Section~5 describes the implementation details and experimental setup. Section~6 reports the results and discussion across all evaluation tracks. Finally, Sections~7 and~8 discuss limitations and conclude the paper.
   
   % ============================================================
   \section{Related Work}

@@ -1,17 +1,18 @@
 # Fdb version 4
-["bibtex main"] 1779811850.90864 "main.aux" "main.bbl" "main" 1779811853.01483 0
+["bibtex main"] 1779816212.41162 "main.aux" "main.bbl" "main" 1779816214.5006 0
   "./references.bib" 1779810838.51645 3349 3f61a8e0ae610a18c83c2c6facdd6004 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1685185333 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1779811852.81855 7512 ac7dc2ac8477c694329a7c660597a7bc "pdflatex"
+  "main.aux" 1779816214.30427 8298 b44600294fa833f799b862d2db651f51 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1779811850.94999 "main.tex" "main.pdf" "main" 1779811853.01554 0
+["pdflatex"] 1779816212.45123 "main.tex" "main.pdf" "main" 1779816214.50132 0
   "../outputs/figures/ddpm_fid_10_vs_20_epoch.png" 1779770426.65236 126765 3db2a9485999abec9b9cbc291c1e3ca1 ""
   "../outputs/figures/ddpm_vs_tiny_dit_fid_rank4_8_16.png" 1779770457.94538 91274 46b92f0a2fdc7fbfa24247bbddca5e3e ""
   "../outputs/figures/fid_vs_rank.png" 1779803747.63585 99172 f5b6e8b68a775c7fc948fc918bb4d5ab ""
   "../outputs/figures/fid_vs_trainable_params.png" 1779803747.94884 97769 a661b4f88b7aeda20781d35c5f440ed3 ""
+  "../outputs/figures/lora_workflow.png" 1779816140.2513 1427558 b995b441cc5da90d6694c222a6c31b16 ""
   "/users/PCS0229/imankhazrak/.texlive2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1767551871.93635 1329204 d612c5eb08eb668709b4c564b291cb33 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1685185637 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1685185637 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
@@ -153,10 +154,10 @@
   "/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1685185644 9715 b051d5b493d9fe5f4bc251462d039e5f ""
   "/usr/share/texlive/texmf-dist/tex/latex/url/url.sty" 1685185643 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1685185337 39615 4ca7b2be4e89b50848d4f0b4d97130bb ""
-  "main.aux" 1779811852.81855 7512 ac7dc2ac8477c694329a7c660597a7bc "pdflatex"
-  "main.bbl" 1779811850.94265 3054 c980e6bcb8c9bd7783bb8a8646256fea "bibtex main"
-  "main.out" 1779811852.81956 3378 9b2b71c1d8886ce7939845fca5f1e3de "pdflatex"
-  "main.tex" 1779811797.57016 34601 27f0eeb215c3e5f3018bbc9245788b4a ""
+  "main.aux" 1779816214.30427 8298 b44600294fa833f799b862d2db651f51 "pdflatex"
+  "main.bbl" 1779816212.44386 3054 c980e6bcb8c9bd7783bb8a8646256fea "bibtex main"
+  "main.out" 1779816214.30527 3378 9b2b71c1d8886ce7939845fca5f1e3de "pdflatex"
+  "main.tex" 1779816189.17797 35824 8dc11075878b43bf9810aeaeaea7ecc7 ""
   (generated)
   "main.aux"
   "main.log"
