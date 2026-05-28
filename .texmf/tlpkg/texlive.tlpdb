@@ -1,0 +1,105 @@
+name 00texlive.installation
+category TLCore
+depend opt_location:http://mirror.ctan.org/systems/texlive/tlnet
+depend setting_available_architectures:
+depend setting_usertree:1
+
+name appendix
+category Package
+revision 53718
+shortdesc Extra control of appendices
+longdesc The appendix package provides various ways of formatting the
+longdesc titles of appendices. Also (sub)appendices environments are
+longdesc provided that can be used, for example, for per chapter/section
+longdesc appendices. The word 'Appendix' or similar can be prepended to
+longdesc the appendix number for article class documents. The word
+longdesc 'Appendices' or similar can be added to the table of contents
+longdesc before the appendices are listed. The word 'Appendices' or
+longdesc similar can be typeset as a \part-like heading (page) in the
+longdesc body. An appendices environment is provided which can be used
+longdesc instead of the \appendix command.
+containersize 2880
+containerchecksum efaf48867a45f8365755224123b9259f80f49417c409698420d67670baa969d5d354df1429fe7abbd87c29a8e89a9e084cd75384310a44d61e1f2fb7a2650977
+doccontainersize 316980
+doccontainerchecksum f4e90fc9fa5ca89a9a20ceb56cce788984f3ce5e55f92c99de966a54afca7145d9e3602c4e514ee6b7887b3ae9f8facc9b3191ada19514aae7c7886ae2984b0c
+srccontainersize 10596
+srccontainerchecksum 7e7222abea6401b749f2019fb205956c99bc3ce48134138862caead25aadce25410ac4fdf9ce10e34dbb802c07e5fadf8e4facaf846047ea654f2605b4f3743d
+runfiles size=3
+ tex/latex/appendix/appendix.sty
+catalogue-contact-repository https://github.com/wspr/herries-press/
+catalogue-ctan /macros/latex/contrib/appendix
+catalogue-license lppl1.3c
+catalogue-topics appendix headings
+catalogue-version 1.2c
+
+name orcidlink
+category Package
+revision 58446
+shortdesc Insert hyperlinked ORCiD logo
+longdesc This package provides a command to insert the ORCiD logo, which
+longdesc is hyperlinked to the URL of the researcher whose iD was
+longdesc specified.
+containersize 1652
+containerchecksum 7da19faf0d0a70f3199fee270bdede48f0d3ca5e3fb74b7cce431076edbe54d116444e4cc3d342c115d213d8c1b189172311f08c57434a3fc2bfab185131c1e9
+doccontainersize 165296
+doccontainerchecksum 76477074308535d081939c0b3aef549b67b113005bc8a4f4571edae6037d49e2af25a8f9166c130fc4e6749f14a86424cf13f8e63e89cfe067238b8a6bce6267
+srccontainersize 3256
+srccontainerchecksum 4304bb8044b3452f09d6f09a6eeee9a857cecd49f86dfa290d945fce8bd6859c921419fe4cacc7f17aea6a58857974416d8a178be0e28c1c6fb487a7485791b0
+runfiles size=1
+ tex/latex/orcidlink/orcidlink.sty
+catalogue-also doi
+catalogue-contact-bugs https://github.com/duetosymmetry/orcidlink-LaTeX-command/issues
+catalogue-contact-repository https://github.com/duetosymmetry/orcidlink-LaTeX-command
+catalogue-ctan /macros/latex/contrib/orcidlink
+catalogue-license lppl1.3c
+catalogue-topics hyper
+catalogue-version 1.0.3
+
+name sttools
+category Package
+revision 56774
+shortdesc Various macros
+longdesc A collection of tools and macros, providing: miscellaneous
+longdesc float control, page styles for floats, multipage tabulars, even
+longdesc columns at end of twocolumn region, switching between one- and
+longdesc two-column anywhere, simulating the effect of "midfloats", a
+longdesc package to manipulate numerical lists and arrays.
+containersize 13432
+containerchecksum d9707fc22ad26d291288debdb2d9bb492175dade76ed398c3c0ffd1d4ba256d8c691bc2fb9d537ff01af4de7bf1352d4b1f62cc6c54afa8c02eea8b69185382b
+doccontainersize 764344
+doccontainerchecksum b32bd4fa10599b3ace5bc8e1b2dae79750aace26a98806de275fdd358554b6f26fde48c9e7b0fbb108de0a771728a68f6c09fa9c568a5e2fce7b9aaa1fb1f58f
+srccontainersize 21348
+srccontainerchecksum 56a096fbc8f28a0ea2f1ef31ebf277204319eaf6fb9bfcbd5449d24b2689a111f192ee1c723adcf8800c9ca2069c934cde8d0bdefae473e6eced2b043b7fd8d8
+runfiles size=28
+ tex/latex/sttools/cuted.sty
+ tex/latex/sttools/floatpag.sty
+ tex/latex/sttools/flushend.sty
+ tex/latex/sttools/midfloat.sty
+ tex/latex/sttools/stabular.sty
+ tex/latex/sttools/stfloats.sty
+ tex/latex/sttools/texsort.sty
+catalogue-ctan /macros/latex/contrib/sttools
+catalogue-license lppl1.3
+catalogue-topics collection
+catalogue-version 2.1
+
+name wrapfig
+category Package
+revision 22048
+shortdesc Produces figures which text can flow around
+longdesc Allows figures or tables to have text wrapped around them. Does
+longdesc not work in combination with list environments, but can be used
+longdesc in a parbox or minipage, and in twocolumn format. Supports the
+longdesc float package.
+containersize 9360
+containerchecksum ea9d0693a43f985b9ab13a51e0af82b866adc8500dfb9f42e8b20ce8facd07d0534749bda61d13bc86b921300336c9f7e6099f252c4c65370a2e2cb4423589ae
+doccontainersize 337900
+doccontainerchecksum 9ba4292d2641a31f3719ca66e3d80ca70638f9c943bfad9e9e08543f57a53eccc1292930e95d6a3677d0696e0deb1d1ca698b83eb7285baae275b70ac808be33
+runfiles size=7
+ tex/latex/wrapfig/wrapfig.sty
+catalogue-also floatflt
+catalogue-ctan /macros/latex/contrib/wrapfig
+catalogue-license lppl
+catalogue-topics text-flow
+catalogue-version 3.6
+

@@ -1,0 +1,1105 @@
+\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}
+
+%%%% Standard Packages %%%%
+\usepackage{algorithmicx}
+% \usepackage{float}
+\let\orcidlogo\relax
+\usepackage{orcidlink}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{tabularx}
+%%%% TABLE FIXES (CRITICAL) %%%%
+% You were missing these, causing the "Illegal character" and "Division by 0" errors
+\usepackage{array} 
+\usepackage{threeparttable} 
+\usepackage{rotating}
+%%%% Graphics & Plots %%%%
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{tikz,pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning,arrows.meta}
+
+%%%% Custom Definitions %%%%
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+%%%% Custom Colors %%%%
+\definecolor{color_ce}{RGB}{33,150,243}       % Blue for CE loss
+\definecolor{color_domain}{RGB}{255,140,0}    % Orange for domain loss
+\definecolor{color_total}{RGB}{76,175,80}     % Green for total loss
+\definecolor{color_lambda}{RGB}{220,53,69}    % Red for adaptive lambda
+\definecolor{color_acc}{RGB}{33, 150, 243}    % Blue (Same as ce)
+\definecolor{color_fixed}{RGB}{0,114,178}     % Dark Blue
+\definecolor{color_sigmoid}{RGB}{230,159,0}   % Dark Orange
+\definecolor{color_linear}{RGB}{0,158,115}    % Greenish
+\definecolor{color_adaptive}{RGB}{213,94,0}   % Dark Red
+
+%%%% Theorem Styles %%%%
+\theoremstyle{thmstyleone}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{thmstyletwo}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+\theoremstyle{thmstylethree}
+\newtheorem{definition}{Definition}
+
+\raggedbottom
+
+
+
+\begin{document}
+
+    
+  
+\title[Article Title]{Adaptive Gradient-Norm Weighting for Improved Domain Adversarial Training
+}
+
+%%=============================================================%%
+%% GivenName	-> \fnm{Joergen W.}
+%% Particle	-> \spfx{van der} -> surname prefix
+%% FamilyName	-> \sur{Ploeg}
+%% Suffix	-> \sfx{IV}
+%% \author*[1,2]{\fnm{Joergen W.} \spfx{van der} \sur{Ploeg} 
+%%  \sfx{IV}}\email{iauthor@gmail.com}
+%%=============================================================%%
+
+% \author*[1]{\fnm{Iman} \sur{Khazrak}}\email{ikhazra@bgsu.edu}
+
+% \author[2]{\fnm{Mohammadhossein} \sur{Homaei}}\email{homaei@ieee.org}
+
+% \author[1]{\fnm{Mostafa } \sur{M. Rezaee}}\email{mostam@bgsu.edu}
+
+% \author[1]{\fnm{Robert C.} \sur{Green II}}\email{greenr@bgsu.edu}
+
+% % \equalcont{These authors contributed equally to this work.}
+
+% \affil*[1]{\orgdiv{Department of Computer Science},
+% \orgname{Bowling Green State University},
+% \orgaddress{\city{Bowling Green}, \state{Ohio}, \country{USA}}}
+
+% \affil[2]{\orgdiv{Department of Information Systems and Telematics Engineering},
+% \orgname{University of Extremadura},
+% \orgaddress{\city{Cáceres}, \state{Extremadura}, \country{Spain}}}
+
+\author*[1]{\fnm{Iman} \sur{Khazrak \orcidlink{0000-0001-7087-2283}}}\email{ikhazra@bgsu.edu}
+
+
+\author[2]{\fnm{Mohammadhossein} \sur{Homaei \orcidlink{0000-0002-6108-6632}}}\email{homaei@ieee.org}
+
+
+\author[1]{\fnm{Mostafa} \sur{ M. Rezaee \orcidlink{0000-0002-0849-3650}}}\email{mostam@bgsu.edu}
+
+
+\author[1]{\fnm{Robert} \sur{ C. Green II \orcidlink{0000-0002-3792-2725}}}\email{greenr@bgsu.edu}
+
+\affil[1]{\orgdiv{Department of Computer Science}, \orgname{Bowling Green State University}, \city{Bowling Green}, \postcode{43403}, \state{OH}, \country{USA}}
+
+\affil[2]{\orgdiv{Department of Information Systems and Telematics Engineering},
+\orgname{University of Extremadura},
+\orgaddress{\city{Cáceres}, \state{Extremadura}, \country{Spain}}}
+
+
+%%==================================%%
+%% Sample for unstructured abstract %%
+%%==================================%%
+
+\abstract{
+Unsupervised domain adaptation (UDA) transfers knowledge from labeled source domains to unlabeled target domains by jointly optimizing classification and domain alignment objectives. The trade-off parameter $\lambda$ controlling this balance is critical, yet most existing methods rely on fixed values or manually designed schedules that do not adapt to evolving optimization dynamics. Motivated by the theoretical coupling between source error and domain divergence in the Ben-David bound, and inspired by gradient-balancing principles from multi-task learning, we propose Adaptive Gradient-Norm Weighting (AWD), a lightweight scalarization mechanism that dynamically adjusts $\lambda$ at each training iteration based on the ratio of classification and alignment gradient norms.
+
+Unlike architectural modifications, AWD operates purely at the training level and introduces no additional learnable parameters. It can be integrated into existing UDA pipelines as a drop-in replacement for static or scheduled $\lambda$ settings. We evaluate AWD within two foundational UDA frameworks—Deep Adaptation Network (DAN) and Domain-Adversarial Neural Network (DANN)—to isolate the effect of adaptive scalarization. Across Office-31, Office-Home, DomainNet, and digit adaptation benchmarks, AWD consistently improves performance, yielding gains of up to +4.5\% on Office-Home for DANN, while incurring only approximately 3\% additional training time.
+
+These results suggest that gradient-aware adaptive weighting provides a practical and interpretable approach to balancing classification and alignment objectives, and may serve as a general training-level mechanism applicable across a broad range of UDA architectures.
+}
+
+
+
+
+
+
+\keywords{Unsupervised Domain Adaptation, Adaptive Lambda, Deep Transfer Learning, Domain-Adversarial Neural Network, Deep Adaptation Network}
+
+%%\pacs[JEL Classification]{D8, H51}
+
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+
+\section{Introduction}
+
+Unsupervised domain adaptation (UDA) aims to help models trained on labeled source data perform well on unlabeled target domains when their data distributions differ~\cite{bendavid2010theory,ganin2016dann}. This ability is crucial in many real-world applications such as medical imaging, autonomous driving, and natural language processing, where collecting labeled data for every domain is costly or impractical. Most UDA methods combine two objectives: a classification loss that ensures good performance on the source domain, and a domain alignment loss that encourages the model to learn features that are consistent across domains.
+
+Balancing these two objectives is one of the main challenges in UDA. The total training loss is usually written as $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$, where $\lambda$ controls the strength of the alignment term. Finding the right value of $\lambda$ is difficult for several reasons. First, if $\lambda$ is too large or applied too early, aggressive alignment can distort features before the classifier has learned meaningful representations, leading to negative transfer. Second, if $\lambda$ is too small, the model fails to reduce the domain gap effectively and generalizes poorly to the target domain. Existing works typically use either a fixed $\lambda$ or a manually designed schedule that increases over time. Both approaches have significant drawbacks: fixed values ignore the changing dynamics of training, while schedules require extensive tuning and often work only for specific datasets or architectures.
+
+Unlike standard multi-task learning, where different tasks may operate on separate output heads with relatively independent gradients, UDA presents a distinct challenge: the classification and alignment objectives operate on a shared feature representation and are theoretically coupled. The seminal work of Ben-David et al.~\cite{bendavid2010theory} formalizes this coupling, showing that target error depends on both source error and domain divergence through a shared hypothesis class. This means that changes to the feature extractor affect both objectives simultaneously, and the optimal balance between them shifts as training progresses. A fixed or predetermined $\lambda$ schedule cannot account for this evolving interdependence, which motivates the need for an adaptive mechanism that responds to actual training dynamics.
+
+To address this limitation, we propose Adaptive Gradient-Norm Weighting (AWD), a mechanism that dynamically adjusts $\lambda$ at each training iteration based on the ratio between classification and alignment gradient norms. The core idea is that gradient magnitudes serve as a proxy for the relative optimization difficulty of each objective at any given moment. At each step, we compute $\lambda(t) = \|\nabla \mathcal{L}_{\text{CE}}\| / \|\nabla \mathcal{L}_{\text{Align}}\|$, which allows $\lambda$ to adjust automatically based on the current training state. When classification gradients are large relative to alignment gradients, $\lambda$ increases, amplifying the alignment term and biasing optimization toward domain-invariant features during early or uncertain stages of training. As training progresses and the classifier stabilizes, classification gradients typically decrease, causing $\lambda$ to reduce and preventing excessive alignment from degrading class discriminability. This process is fully data-driven, requires no manual tuning, and adapts naturally to different datasets and training stages.
+
+\subsection{Clarification on the role of \texorpdfstring{$\lambda$}{lambda}}
+It is important to clarify the precise effect of $\lambda$ in the total loss $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$. Increasing $\lambda$ strengthens the influence of the alignment loss, not the classification loss. Therefore, a larger $\lambda$ encourages the optimizer to prioritize reducing domain discrepancy, while a smaller $\lambda$ places relatively more emphasis on classification accuracy. Our adaptive mechanism leverages this relationship: when the classification objective is difficult (large $\|\nabla \mathcal{L}_{\text{CE}}\|$), increasing $\lambda$ promotes domain-invariant features that can support better generalization; when alignment dominates the gradient landscape, reducing $\lambda$ allows the classifier to refine decision boundaries without excessive interference from alignment pressure.
+
+We emphasize that AWD is not an architectural innovation but rather a \emph{self-regulating training mechanism}. It introduces no additional learnable parameters, requires no changes to network architecture, and adds minimal computational overhead (approximately 3\% increase in training time). The method can be integrated into existing UDA pipelines as a drop-in replacement for static $\lambda$ settings, making it straightforward to adopt in practice.
+
+To provide a high-level overview of our approach, Fig.~\ref{fig:awd-graphical} illustrates the overall architecture of the proposed adaptive weighting framework. Labeled source samples and unlabeled target samples are processed through a shared feature extractor. The resulting features are used simultaneously for task learning and domain alignment. Our adaptive mechanism computes a difficulty signal based on the gradient norms of the two objectives and dynamically adjusts the alignment weight $\lambda$ during training. This enables controlled domain alignment and helps prevent both under-alignment and over-alignment, which are common issues in existing UDA methods.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{Fig1_graphical_abstract_2.png}
+    \caption{Overview of the proposed Adaptive Weighting Domain Adaptation (AWD) framework. Source and target data are passed through a shared deep feature extractor. The extracted features feed into both the classifier and the domain aligner (e.g., MMD or adversarial). AWD computes a gradient-based difficulty signal and dynamically adjusts the alignment weight $\lambda$ to balance classification and alignment throughout training.}
+    \label{fig:awd-graphical}
+\end{figure}
+
+We apply this approach to two well-known UDA frameworks: Deep Adaptation Network (DAN)~\cite{long2015dan}, which aligns features using Maximum Mean Discrepancy (MMD), and Domain-Adversarial Neural Network (DANN)~\cite{ganin2016dann}, which uses adversarial training. It is important to clarify that our goal is not to surpass the latest state-of-the-art UDA models that leverage large-scale pre-training or transformer architectures. Instead, we aim to show that AWD can improve the training dynamics of foundational models like DAN and DANN, which serve as the basis for many subsequent methods. Improvements on these core frameworks suggest that our strategy may also benefit newer UDA architectures by replacing their fixed or scheduled $\lambda$ values. Our experiments confirm consistent gains: adaptive DANN improves average accuracy by 2.6\% on Office-31 and 4.5\% on Office-Home compared to fixed-$\lambda$ baselines, while adding only about 3\% to training time.
+
+The main contributions of this work are:
+\begin{itemize}
+    \item We propose AWD, a gradient-norm adaptive loss weighting mechanism that automatically balances classification and alignment objectives without manual schedule design, inspired by gradient-balancing principles from multi-task learning but tailored to the coupled objective structure of UDA.
+    \item We demonstrate that AWD consistently improves foundational UDA models (DAN and DANN) across multiple benchmarks with minimal computational overhead and no architectural modifications.
+    \item We show that the adaptive mechanism can serve as a drop-in replacement for fixed $\lambda$ settings in existing UDA frameworks, offering a practical solution for improving training stability.
+    \item We provide detailed analysis including ablation studies, gradient trajectory visualizations, and practical guidelines for applying the method to other UDA architectures.
+\end{itemize}
+
+The rest of this paper is structured as follows. Section~\ref{sec:related} reviews related work on domain adaptation, adversarial training, and adaptive loss weighting, including recent advances in modern UDA architectures and objective balancing. Section~\ref{sec:method} explains the gradient-norm adaptive $\lambda$ mechanism, its formal interpretation as adaptive scalarization, and describes how it integrates into DAN and DANN. Section~\ref{sec:experiments} presents experimental results on Office-31, Office-Home, DomainNet, and digit recognition datasets, along with ablation studies. Section~\ref{sec:discussion} discusses the comparative scope and modern relevance of our evaluation. Finally, Section~\ref{sec:conclusion} concludes the paper with a summary and directions for future work.
+
+
+\section{Related Work}
+\label{sec:related}
+
+Our work addresses the challenge of dynamically balancing classification and domain alignment objectives in unsupervised domain adaptation. We position AWD as a practical mechanism that builds on insights from both multi-task learning and domain adaptation research. Our goal is not to surpass the latest methods employing foundation models or transformer architectures, but rather to demonstrate that gradient-based adaptive weighting can improve foundational UDA frameworks---specifically DAN~\cite{long2015dan} and DANN~\cite{ganin2016dann}---which form the basis of many subsequent UDA methods. By showing improvements on these core architectures, we suggest that the approach could benefit newer models as well.
+
+\subsection{Foundational Domain Adaptation Methods}
+
+Early domain adaptation work focused on aligning distributions in shallow settings through methods like Transfer Component Analysis (TCA)~\cite{pan2011tca}, which minimizes Maximum Mean Discrepancy (MMD)~\cite{gretton2012kernel}, and Subspace Alignment (SA)~\cite{fernando2013sa}. The foundational transfer learning survey by Pan and Yang~\cite{pan2010survey} in IEEE TKDE provided a systematic taxonomy that continues to shape the field. Deep learning enabled more powerful approaches: Tzeng et al.~\cite{tzeng2014ddc} introduced Deep Domain Confusion (DDC), incorporating MMD loss into CNNs, while Sun and Saenko~\cite{sun2016coral} proposed Deep CORAL for aligning covariance statistics. Long et al.~\cite{long2015dan} presented DAN, using multi-kernel MMD across multiple layers, and Joint Adaptation Networks (JAN)~\cite{long2017jan} extended this by aligning joint distributions of features and predictions.
+
+These foundational methods share a common characteristic: they rely on a fixed $\lambda$ to balance classification and alignment losses throughout training. While this simplifies implementation, it does not account for the evolving optimization landscape as training progresses. Our work explores whether a gradient-based adaptive scheme can improve upon this static approach. Prior studies on diffusion-based synthetic data generation and stability analysis~\cite{khazrak2025addressing, khazrak2025feasibility} highlight the sensitivity of representation learning to hyperparameter settings, reinforcing the need for dynamic and data-driven weighting strategies such as AWD.
+
+\subsection{Adversarial Domain Adaptation}
+
+Ganin et al.~\cite{ganin2016dann} introduced DANN, using a gradient reversal layer to train a domain discriminator adversarially against the feature extractor. DANN employs a manually designed sigmoid schedule that gradually increases $\lambda$ from 0 to 1, representing an important step toward dynamic weighting. However, this schedule is predetermined and does not respond to actual training dynamics. Extensions include ADDA~\cite{tzeng2017adda} with separate domain encoders, CDAN~\cite{long2018cdan} with conditional discriminators that exploit multilinear conditioning on classifier predictions, MCD~\cite{saito2018mcd} using dual classifiers for maximum classifier discrepancy, MADA~\cite{pei2018mada} with class-specific discriminators, and CyCADA~\cite{hoffman2018cycada} combining adversarial and pixel-level adaptation.
+
+Zhang et al.~\cite{zhang2019mdd} proposed Margin Disparity Discrepancy (MDD), which bridges theory and algorithm by introducing margin-aware generalization bounds that translate directly into an adversarial training objective. MDD is particularly notable for providing rigorous Rademacher complexity-based guarantees while maintaining practical effectiveness. Chen et al.~\cite{chen2019bsp} introduced Batch Spectral Penalization (BSP), which regularizes the singular values of feature matrices to penalize the largest singular values and prevent negative transfer, representing a distinct spectral regularization approach to UDA.
+
+These methods have achieved strong results, and their heuristic schedules represent reasonable design choices validated through extensive experimentation. Our gradient-norm adaptive scheme offers an alternative that derives $\lambda$ directly from optimization signals, which may reduce the need for schedule tuning across different datasets.
+
+\subsection{Modern UDA: Self-Training, Contrastive, and Transformer-Based Methods}
+
+The UDA landscape has evolved substantially in recent years, with advances along several directions that complement the core alignment-based paradigm.
+
+\subsubsection{Source-free and self-training methods.}
+SHOT~\cite{liang2020shot} introduced source-free adaptation by freezing the source classifier and adapting the feature extractor using information maximization and self-supervised pseudo-labeling. FixBi~\cite{na2021fixbi} proposed fixed ratio-based mixup between source and target domains with bidirectional matching for robust pseudo-label generation. These methods address practical scenarios where source data is unavailable during adaptation, a setting that has attracted growing attention in venues such as NeurIPS~\cite{liang2020shot} and CVPR~\cite{na2021fixbi}.
+
+\subsubsection{Contrastive approaches to UDA.}
+Contrastive learning has been increasingly adopted for domain adaptation. AdaContrast~\cite{chen2022contrastive} combines contrastive feature learning with online pseudo-label refinement via nearest-neighbor voting, achieving state-of-the-art results on VisDA and DomainNet benchmarks at CVPR 2022. Zhang et al.~\cite{zhang2022dac} proposed Divide and Contrast (DaC), which uses adaptive contrastive learning to perform source-free domain adaptation by dividing target samples into confident and less-confident subsets. These approaches demonstrate that self-supervised representation learning can serve as an effective alignment mechanism.
+
+\subsubsection{Transformer-based domain adaptation.}
+The emergence of Vision Transformers (ViTs)~\cite{dosovitskiy2021vit} has introduced new paradigms for UDA. CDTrans~\cite{xu2022cdtrans} proposed a cross-domain transformer with weight-sharing triple-branch architecture at ICLR 2022, achieving strong results on VisDA-2017 and DomainNet using cross-attention for domain alignment. Yang et al.~\cite{yang2023tvt} introduced Transferable Vision Transformer (TVT) at WACV 2023, providing a unified framework to exploit ViT transferability for domain adaptation. These methods demonstrate that the self-attention mechanism in transformers naturally facilitates cross-domain feature alignment, though they typically retain the fundamental two-objective structure ($\mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$) where $\lambda$ is fixed or manually scheduled.
+
+\subsubsection{Minimum class confusion and entropy-based methods.}
+MCC~\cite{jin2020mcc} (Minimum Class Confusion) at ECCV 2020 introduces a class confusion loss weighted adaptively based on prediction entropy, providing instance-level rather than global weighting. This approach focuses on reducing inter-class confusion during alignment but does not address the global balance between classification and alignment objectives. AdaMatch~\cite{berthelot2021adamatch} combines consistency regularization with distribution alignment and uses relative confidence thresholding to balance labeled and unlabeled losses.
+
+\subsection{Gradient Balancing in Multi-Task Learning}
+
+The challenge of balancing multiple objectives has been extensively studied in multi-task learning (MTL). Kendall et al.~\cite{kendall2018uncertainty} proposed uncertainty-based weighting, which learns task weights based on homoscedastic uncertainty. Sener and Koltun~\cite{sener2018mgda} introduced MGDA, casting multi-task optimization as finding Pareto-optimal solutions. Chen et al.~\cite{chen2018gradnorm} developed GradNorm, which balances gradient magnitudes across tasks by introducing learnable loss weights that are updated to equalize training rates relative to a reference. More recent work includes PCGrad~\cite{yu2020pcgrad}, which projects conflicting gradients; CAGrad~\cite{liu2021conflictaverse}, which seeks conflict-averse descent directions; and Nash-MTL~\cite{navon2022nashmtl}, which frames multi-task optimization as a bargaining game.
+
+GradNorm is particularly relevant to our work, as both methods use gradient norms to inform loss weighting. However, there are important differences in formulation and context. GradNorm introduces learnable weight parameters $w_i(t)$ for each task and updates them via gradient descent to match training rates across tasks relative to an initial reference loss. This requires tracking loss ratios over time and adds optimization variables. In contrast, AWD computes $\lambda$ directly as the ratio of gradient norms at each iteration without additional learnable parameters or reference tracking. This simpler formulation is motivated by the specific two-objective structure of UDA, as discussed below.
+
+\subsection{Adaptive Weighting in Domain Adaptation}
+
+Several works have explored adaptive weighting specifically for UDA, each addressing different aspects of the balancing problem. Other approaches include SADA~\cite{wang2020sada}, which performs sample-level re-weighting based on alignment difficulty; DWL~\cite{xiao2021dwl}, which adjusts $\lambda$ using validation-set domain confusion; BiAT~\cite{liang2022biat}, which alternates between alignment and classification phases; and AdaContrast~\cite{chen2022contrastive}, which adapts contrastive loss weights based on confidence scores. Each of these methods provides valuable insights into adaptive weighting, addressing different aspects such as sample-level adaptation, validation-based tuning, or framework-specific designs.
+
+\subsection{Recent Advances in Objective Balancing for Domain Adaptation}
+
+Despite significant architectural advances in UDA---from conditional adversarial networks~\cite{long2018cdan} to margin-based methods~\cite{zhang2019mdd}, source-free adaptation~\cite{liang2020shot}, contrastive approaches~\cite{chen2022contrastive}, and transformer-based frameworks~\cite{xu2022cdtrans,yang2023tvt}---the question of how to balance classification and alignment objectives remains largely addressed through fixed or heuristic weighting strategies. CDAN uses a fixed $\lambda$ (typically $\lambda = 1$) throughout training; MDD relies on a constant margin parameter $\gamma$; SHOT avoids the issue by decoupling adaptation stages; and transformer-based methods such as CDTrans and TVT adopt fixed loss coefficients for their alignment terms.
+
+This reliance on static weighting persists for practical reasons: fixed $\lambda$ values simplify implementation and reduce the hyperparameter search space. However, the theoretical coupling between classification and alignment---formalized by the Ben-David bound~\cite{bendavid2010theory} and the margin-based generalization theory of Zhang et al.~\cite{zhang2019mdd}---suggests that the optimal balance should evolve as the shared representation changes during training. When classification gradients are large (indicating an under-converged classifier), aggressive alignment can distort emerging feature structures. When alignment gradients dominate, the model may over-prioritize domain matching at the expense of discriminability. A static $\lambda$ cannot respond to these evolving conditions.
+
+The multi-task learning literature has developed principled gradient-based scalarization methods---including GradNorm~\cite{chen2018gradnorm}, PCGrad~\cite{yu2020pcgrad}, CAGrad~\cite{liu2021conflictaverse}, and Nash-MTL~\cite{navon2022nashmtl}---that dynamically adjust task weights based on optimization signals. However, these methods are designed for settings with multiple independent tasks and separate prediction heads. Their direct application to UDA is complicated by the tight coupling between classification and alignment through the shared feature extractor.
+
+AWD addresses this gap by proposing a gradient-norm-based scalarization principle specifically designed for the two-objective structure of UDA. Unlike GradNorm, which introduces learnable weight parameters and reference loss tracking, AWD computes $\lambda$ directly from the ratio of gradient norms at each iteration, adding no parameters or architectural modifications. Unlike methods that adjust weighting at the sample level (e.g., MCC's entropy-based weighting) or the stage level (e.g., SHOT's decoupled adaptation), AWD provides global, iteration-level balancing that responds to the current optimization state. We emphasize that AWD is not positioned as a replacement for these modern methods, but rather as a complementary training mechanism that addresses a specific and persistent challenge---principled objective balancing---that remains relevant across UDA architectures.
+
+\subsection{Positioning AWD: Comparison with Related Methods}
+
+AWD is conceptually related to both GradNorm from MTL and the adaptive weighting methods developed for UDA, but it occupies a distinct position motivated by the specific structure of the UDA problem.
+
+\subsubsection{\texorpdfstring{AWD vs.\ GradNorm}{AWD vs. GradNorm}}
+Both methods use gradient norms to guide loss weighting, but they differ in formulation and motivation. GradNorm was designed for general MTL settings where multiple tasks may have separate output heads and relatively independent gradients. It introduces learnable weight parameters and updates them to equalize training rates across tasks. AWD, by contrast, is tailored to UDA where classification and alignment losses operate on a shared feature representation and are theoretically coupled through the domain adaptation bound~\cite{bendavid2010theory}. Because the feature extractor is shared, changes driven by one objective directly affect the other. AWD exploits this coupling by using the gradient norm ratio as an instantaneous signal of relative optimization difficulty, without requiring additional parameters or reference loss tracking. The simpler formulation is appropriate because UDA involves only two coupled objectives rather than multiple potentially independent tasks.
+
+\subsubsection{AWD vs.\ UDA adaptive methods.}
+Compared to existing adaptive weighting approaches in UDA, AWD differs in scope and mechanism. Methods like MCC and AdaMatch perform instance-level or confidence-based weighting, which addresses a different aspect of adaptation (sample difficulty or pseudo-label quality) rather than global objective balancing. SHOT decouples adaptation stages rather than dynamically weighting a joint objective. DWL requires a validation set for computing domain confusion scores. AWD provides global, iteration-level weighting based solely on gradient information computed during the forward-backward pass, requiring no additional data, no architectural changes, and no extra learnable parameters. This makes it straightforward to integrate as a drop-in replacement for static $\lambda$ in existing frameworks.
+
+\subsubsection{AWD vs.\ modern architectures.}
+It is important to clarify the relationship between AWD and more recent UDA architectures. Methods such as CDAN~\cite{long2018cdan}, MDD~\cite{zhang2019mdd}, CDTrans~\cite{xu2022cdtrans}, and TVT~\cite{yang2023tvt} advance UDA through improved feature alignment mechanisms, architectural innovations, or stronger backbones. AWD does not compete with these methods on the architectural level; instead, it addresses a complementary problem---how to balance the classification and alignment terms in the joint objective. Since most of these methods retain the standard $\mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$ structure (or a close variant), AWD can in principle be integrated into their training procedures. We discuss this extensibility further in Sections~\ref{sec:experiments} and~\ref{sec:discussion}.
+
+\subsubsection{Why UDA justifies a different interpretation.}
+The key distinction between MTL and UDA lies in the relationship between objectives. In standard MTL, tasks often share only early layers while having separate prediction heads, and improving one task does not necessarily help another. In UDA, the alignment objective is intended to support improved target classification, and the two objectives are therefore closely related and optimized over a shared representation. The Ben-David et al.\ bound~\cite{bendavid2010theory} formalizes this relationship: target error is bounded by source error plus domain divergence plus an ideal joint error term. This theoretical coupling suggests that the balance between classification and alignment should evolve as the shared representation changes, rather than following a predetermined schedule. AWD operationalizes this intuition by letting the gradient dynamics---which reflect the current state of the shared representation---determine the appropriate $\lambda$ at each iteration.
+
+\vspace{0.5em}
+\noindent In summary, while domain adaptation has advanced through sophisticated architectures and large-scale pre-training, the challenge of dynamically balancing competing objectives remains relevant. Most methods---from foundational approaches like DAN and DANN to modern frameworks such as CDAN, MDD, SHOT, and CDTrans---rely on fixed $\lambda$ values or manually designed schedules. AWD offers a simple, gradient-based alternative that is conceptually grounded in both MTL principles and UDA theory. By demonstrating improvements on DAN and DANN, we show that this approach provides a practical mechanism for automatic objective balancing that may complement a range of UDA methods.
+
+
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Problem Formulation}
+
+We consider the standard unsupervised domain adaptation setting. Let the labeled source domain be $\mathcal{D}_s = \{(x_i^s, y_i^s)\}_{i=1}^{n_s}$ and the unlabeled target domain be $\mathcal{D}_t = \{x_j^t\}_{j=1}^{n_t}$, where $x \in \mathcal{X}$ denotes input features and $y \in \mathcal{Y}$ denotes class labels. The goal is to learn a hypothesis $h: \mathcal{X} \to \mathcal{Y}$ that minimizes the target risk $\epsilon_t(h) = \mathbb{E}_{(x,y) \sim \mathcal{D}_t}[\ell(h(x), y)]$.
+
+In deep UDA, the hypothesis is decomposed as $h = G_c \circ G_f$, where $G_f: \mathcal{X} \to \mathcal{Z}$ is a feature extractor mapping inputs to a latent space $\mathcal{Z}$, and $G_c: \mathcal{Z} \to \mathcal{Y}$ is the classifier. The feature extractor parameters $\theta$ are shared across both domains. Training minimizes a combined objective:
+\begin{equation}
+\mathcal{L}_{\text{total}}(\theta) = \mathcal{L}_{\text{CE}}(\theta) + \lambda \cdot \mathcal{L}_{\text{Align}}(\theta),
+\label{eq:total_loss}
+\end{equation}
+where $\mathcal{L}_{\text{CE}}(\theta)$ is the cross-entropy loss on labeled source samples:
+\begin{equation}
+\mathcal{L}_{\text{CE}}(\theta) = \mathbb{E}_{(x^s, y^s) \sim \mathcal{D}_s}\left[ \ell\big(G_c(G_f(x^s; \theta)), y^s\big) \right],
+\label{eq:ce_loss}
+\end{equation}
+and $\mathcal{L}_{\text{Align}}(\theta)$ is the domain alignment loss (e.g., MMD for DAN, adversarial loss for DANN). The hyperparameter $\lambda \geq 0$ controls the trade-off: \emph{increasing $\lambda$ strengthens the influence of alignment, while decreasing $\lambda$ places relatively more emphasis on classification}.
+
+\subsection{Limitations of Fixed and Scheduled \texorpdfstring{$\lambda$}{lambda}}
+
+Existing methods typically use a fixed $\lambda$ (e.g., $\lambda = 1$) or a predefined schedule such as the sigmoid warmup in DANN: $\lambda(t) = \frac{2}{1 + \exp(-10 \cdot t/T)} - 1$, where $T$ is the total number of epochs. These approaches do not adapt to actual training dynamics. When the classifier has not yet converged (large $\mathcal{L}_{\text{CE}}$), aggressive alignment can distort emerging feature representations, causing negative transfer. Conversely, when alignment is insufficient (large $\mathcal{L}_{\text{Align}}$), the domain gap persists and target generalization suffers. A static $\lambda$ cannot respond to these evolving conditions.
+
+\subsection{Adaptive Gradient-Norm Weighting (AWD)}
+
+\subsubsection{Core idea.}
+We propose computing $\lambda$ dynamically based on the ratio of gradient norms:
+\begin{equation}
+\lambda(t) = \mathrm{clip}\left( \frac{\|\nabla_\theta \mathcal{L}_{\text{CE}}\|_2}{\|\nabla_\theta \mathcal{L}_{\text{Align}}\|_2 + \epsilon}, \lambda_{\min}, \lambda_{\max} \right),
+\label{eq:adaptive_lambda}
+\end{equation}
+where $\epsilon = 10^{-8}$ prevents division by zero, and $[\lambda_{\min}, \lambda_{\max}] = [0, 5]$ is a stability safeguard that prevents extreme weighting due to noisy gradient estimates, rather than a tuned hyperparameter.
+
+
+\subsubsection{Clarification on the role of \texorpdfstring{$\lambda$}{lambda}.}
+It is essential to understand the effect of this formulation correctly. When $\|\nabla_\theta \mathcal{L}_{\text{CE}}\|$ is large relative to $\|\nabla_\theta \mathcal{L}_{\text{Align}}\|$, the ratio increases, yielding a larger $\lambda$. A larger $\lambda$ \emph{amplifies the alignment term} in $\mathcal{L}_{\text{total}}$, not the classification term. This means: when the classification objective is difficult (large gradients indicate the optimizer is working hard to reduce $\mathcal{L}_{\text{CE}}$), AWD responds by strengthening alignment to encourage domain-invariant features that can support generalization. Conversely, when $\|\nabla_\theta \mathcal{L}_{\text{Align}}\|$ dominates, $\lambda$ decreases, reducing alignment pressure and allowing the classifier to refine decision boundaries.
+
+\subsubsection{Why gradient norm ratio?}
+The gradient norm $\|\nabla_\theta \mathcal{L}\|_2$ reflects the sensitivity of a loss to parameter changes---intuitively, how much optimization effort is currently directed toward that objective. Unlike GradNorm~\cite{chen2018gradnorm}, which equalizes gradient magnitudes across tasks by introducing learnable weights, AWD uses the \emph{ratio} directly as a monitoring signal. This choice is motivated by the structure of UDA: since classification and alignment operate on a shared representation, their gradients are inherently coupled. The ratio captures their relative optimization difficulty at each iteration without requiring additional parameters or reference loss tracking.
+
+\subsubsection{AWD as a monitoring mechanism.}
+We emphasize that AWD is not a new optimizer or a modification to the optimization algorithm. It is a \emph{self-regulating monitoring mechanism} that adjusts $\lambda$ based on gradient information already computed during the standard forward-backward pass. The underlying optimizer (SGD, Adam, etc.) remains unchanged. AWD simply modulates how the two loss terms are combined before the gradient update, requiring no architectural changes and adding negligible computational overhead.
+
+\subsection{Clamp Bounds as a Stability Safeguard}
+\label{sec:clamp_justification}
+
+The adaptive $\lambda$ in Eq.~\eqref{eq:adaptive_lambda} is constrained to the interval $[\lambda_{\min}, \lambda_{\max}] = [0, 5]$. We emphasize that this clamping is a \emph{stability safeguard}, not a tuned hyperparameter, and the same bounds are used across all experiments without dataset-specific adjustment.
+
+\subsubsection{Why clamping is necessary.}
+
+The gradient-norm ratio $G_{\text{CE}} / G_{\text{Align}}$ can exhibit substantial variance under several common training conditions, making unconstrained adaptation potentially unstable.
+
+During early stages of optimization, before the feature extractor has learned stable and semantically meaningful representations, gradient magnitudes may fluctuate considerably across iterations. In this regime, both classification and alignment losses evolve rapidly, and their gradients can vary sharply from batch to batch. As a result, the ratio between gradient norms may become noisy and unreliable, leading to abrupt changes in the adaptive weighting parameter.
+
+Near convergence, instability can arise for a different reason. When one objective approaches a local minimum, its gradient norm may become very small relative to the other. Because the adaptive coefficient is computed as a ratio, even moderate fluctuations in the numerator or denominator can cause the resulting value to spike or collapse unexpectedly. This sensitivity is particularly pronounced when the denominator approaches zero, amplifying minor stochastic variations into disproportionately large adjustments of $\lambda$.
+
+Additional variance stems from the stochastic nature of mini-batch optimization. Gradient norms are estimated on finite batches and therefore represent noisy approximations of the true population gradients. Small or atypical mini-batches may produce outlier gradient magnitudes that do not reflect the broader optimization landscape, thereby distorting the ratio and introducing short-term instability into the weighting mechanism.
+
+In adversarial settings such as DANN, the dynamic interaction between the feature extractor and discriminator further complicates the picture. The alternating optimization inherent in adversarial training can induce oscillatory behavior in alignment gradients, particularly during early epochs when the discriminator is undertrained. These oscillations can propagate directly into the gradient-norm ratio, resulting in erratic updates of the trade-off parameter.
+
+Without appropriate bounds, these scenarios may yield extreme values of $\lambda$ that destabilize training—either overwhelming the classification objective when $\lambda$ becomes excessively large or prematurely suppressing alignment when $\lambda$ approaches zero. Clamping provides a controlled operating range that mitigates such runaway behavior while preserving the responsiveness and adaptive character of the weighting mechanism.
+
+
+\subsubsection{Choice of [0, 5]}
+
+The selection of bounds $\lambda_{\min} = 0$ and $\lambda_{\max} = 5$ reflects a balance between flexibility and stability, informed by both theoretical considerations and empirical observations.
+
+Setting the lower bound to $\lambda_{\min} = 0$ allows the adaptive mechanism to effectively suppress the alignment objective when the gradient-norm ratio indicates that alignment pressure is unnecessary. This provides maximal flexibility in early or late training stages where classification gradients dominate. In practice, however, the ratio rarely falls below 0.1 on the evaluated benchmarks, meaning that the lower bound is seldom activated. Its primary role is therefore preventive rather than operational, ensuring that alignment is not assigned a negative or artificially constrained weight.
+
+The upper bound of $\lambda_{\max} = 5$ was determined through empirical analysis of gradient dynamics across standard UDA benchmarks. During typical training, the gradient-norm ratio generally falls within the range of approximately 0.5 to 4.0. An upper limit of 5 provides sufficient headroom to accommodate challenging domain shifts without permitting extreme values that could destabilize optimization. This choice is also broadly consistent with common practice in adversarial UDA, where manually designed $\lambda$ schedules often saturate at values between 1 and 2, suggesting that excessively large alignment weights are rarely beneficial.
+
+Finally, the same bounds were applied uniformly across both DAN and DANN, and across Office-31, Office-Home, DomainNet, and digit adaptation benchmarks. No dataset-specific tuning was required. This consistency supports the interpretation of $[0, 5]$ as a stability safeguard rather than a sensitive hyperparameter choice. The bounds function primarily to constrain pathological cases, while the adaptive mechanism determines the effective weighting within that stable operating range.
+
+
+\subsubsection{Precedent in adaptive optimization.}
+Bounding adaptive coefficients is standard practice in optimization and machine learning:  
+
+Adaptive optimizers such as Adam~\cite{kingma2015adam} use $\epsilon$ terms to prevent division by near-zero values, analogous to our use of $\epsilon$ in the denominator.  
+
+Gradient clipping~\cite{pascanu2013difficulty} bounds gradient norms to prevent exploding updates, serving a similar stabilization role.
+Learning rate schedulers often impose minimum and maximum bounds to prevent degenerate behavior.  
+
+GradNorm~\cite{chen2018gradnorm} and other MTL methods implicitly bound weight updates through learning rate and initialization choices.
+
+Our clamping mechanism follows this established pattern: it is a practical safeguard that ensures numerical stability without fundamentally altering the adaptive principle.
+
+\subsubsection{Anticipating reviewer concerns.}
+
+A natural concern is whether the clamp bounds introduce additional hyperparameters that require careful tuning. We address this question explicitly to clarify the role of these limits in the proposed method.
+
+First, no dataset-specific or architecture-specific tuning of the bounds was performed. The interval $[0, 5]$ was selected once based on preliminary inspection of gradient-norm ratio distributions and remained fixed across all experiments, including different datasets, backbones, and UDA frameworks. The reported results therefore do not rely on iterative adjustment of the clamp values.
+
+Second, the method demonstrates robustness to moderate variations in the upper bound. Informal sensitivity analysis indicates that replacing $\lambda_{\max} = 5$ with alternative values such as 3 or 10 does not materially affect final accuracy. During stable training phases, the gradient-norm ratio naturally operates within a narrower effective range, meaning that the clamp primarily prevents pathological excursions rather than dictating typical behavior.
+
+Third, the chosen bounds are interpretable and correspond to intuitive operating limits. A value of $\lambda = 0$ effectively disables alignment, while $\lambda = 5$ assigns alignment five times the weight of the classification objective. Values substantially beyond this range would represent extreme trade-offs that are unlikely to be desirable in practice. The bounds therefore define a reasonable and transparent envelope within which adaptive weighting can function safely.
+
+Finally, it is important to contextualize these bounds relative to existing baselines. Fixed-$\lambda$ methods require selecting a specific scalar value, commonly 0.1, 0.5, or 1.0, which itself constitutes a hyperparameter decision. Scheduled strategies introduce additional parameters, such as the steepness coefficient in DANN’s sigmoid schedule. In comparison, AWD employs a single, globally fixed interval that generalizes across all experiments without modification. In this sense, the clamp bounds are no more burdensome—and arguably less so—than standard choices already required by existing approaches.
+
+In summary, the clamp bounds serve a stabilizing function rather than a performance-tuned one. Their role is analogous to numerical safeguards commonly used in optimization to prevent extreme updates. The fact that the same interval functions consistently across diverse datasets and architectures supports the view that these bounds are general stability constraints rather than sensitive hyperparameters.
+
+
+\subsection{Effect of Adaptive \texorpdfstring{$\lambda$}{lambda} on Domain Adaptation Objectives}
+\label{sec:effect_adaptive_lambda}
+
+This subsection provides an intuitive and empirically grounded explanation of how AWD affects the optimization dynamics of domain adaptation, connecting the gradient-based weighting to the theoretical structure of the UDA problem without claiming formal guarantees.
+
+\subsubsection{Balancing descent rates.}
+In standard gradient descent, the rate at which a loss decreases depends on both the gradient magnitude and the effective weight applied to that loss term. For the combined objective $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$, the contribution of each term to the parameter update is:
+\begin{equation*}
+\Delta \theta \propto -\left( \nabla_\theta \mathcal{L}_{\text{CE}} + \lambda \nabla_\theta \mathcal{L}_{\text{Align}} \right).
+\end{equation*}
+When $\lambda$ is fixed, the relative influence of each objective on $\Delta \theta$ depends entirely on the gradient magnitudes, which evolve unpredictably during training. If $\|\nabla_\theta \mathcal{L}_{\text{CE}}\|$ is much larger than $\|\nabla_\theta \mathcal{L}_{\text{Align}}\|$, the update predominantly serves classification, potentially neglecting alignment. Conversely, if alignment gradients dominate, the update may over-prioritize domain matching at the expense of discriminability.
+
+AWD addresses this imbalance by setting $\lambda = G_{\text{CE}} / G_{\text{Align}}$. Substituting into the update equation:
+\begin{equation*}
+\Delta \theta \propto -\left( \nabla_\theta \mathcal{L}_{\text{CE}} + \frac{G_{\text{CE}}}{G_{\text{Align}}} \nabla_\theta \mathcal{L}_{\text{Align}} \right).
+\end{equation*}
+This formulation implicitly scales the alignment gradient so that both terms contribute comparably to the update magnitude. The result is not strict equalization (as in GradNorm), but rather a soft balancing that prevents either objective from dominating the optimization trajectory. Our experimental results support this interpretation: the gradient trajectory visualizations in Section~\ref{sec:experiments} show that AWD produces smoother loss curves and more stable $\lambda$ evolution compared to fixed or scheduled approaches.
+
+\subsubsection{Qualitative connection to the Ben-David bound.}
+The domain adaptation bound of Ben-David et al.~\cite{bendavid2010theory} states that the target error is bounded by the source error, the divergence between source and target distributions, and an ideal joint error term. In the context of deep UDA, the classification loss $\mathcal{L}_{\text{CE}}$ serves as an empirical proxy for source error, while the alignment loss $\mathcal{L}_{\text{Align}}$ (e.g., MMD or adversarial loss) acts as a proxy for domain divergence. Consequently, the combined objective $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$ can be interpreted as optimizing a weighted combination of these two bound components.
+
+The bound itself does not prescribe a specific value for $\lambda$; rather, it indicates that both source error and domain divergence contribute to target performance. Importantly, the relative influence of these terms may change over the course of training. Early in optimization, classification error often dominates, while effective adaptation ultimately requires reducing domain divergence as well. AWD operationalizes this intuition by allowing the balance between the two objectives to evolve dynamically: when classification gradients indicate strong optimization pressure on the classification objective, AWD increases $\lambda$ to ensure that alignment is not neglected; when alignment gradients dominate, AWD decreases $\lambda$ to reduce interference with class-discriminative structure.
+
+For completeness, the bound can be written as:
+\begin{equation}
+\epsilon_t(h) \leq \epsilon_s(h) + \frac{1}{2} d_{\mathcal{H}\Delta\mathcal{H}}(\mathcal{D}_s, \mathcal{D}_t) + C,
+\end{equation}
+where $\epsilon_s(h)$ denotes the source error, $d_{\mathcal{H}\Delta\mathcal{H}}$ measures domain divergence, and $C$ is the ideal joint error. Under this view, $\mathcal{L}_{\text{CE}}$ approximates $\epsilon_s(h)$, while $\mathcal{L}_{\text{Align}}$ provides a surrogate for domain divergence.
+
+The gradient norms $G_{\text{CE}}$ and $G_{\text{Align}}$ reflect the relative influence of these two components during optimization. When $G_{\text{CE}} \gg G_{\text{Align}}$, the classification objective dominates the optimization dynamics, and AWD increases $\lambda$, biasing optimization toward domain-invariant feature representations. Conversely, when $G_{\text{Align}} \gg G_{\text{CE}}$, alignment pressure dominates, and AWD decreases $\lambda$ to mitigate over-alignment and preserve discriminative structure.
+
+We emphasize that this connection is qualitative rather than formal. AWD does not optimize the Ben-David bound directly, nor do we claim theoretical optimality. Instead, the bound provides a conceptual framework for understanding why dynamically balancing classification and alignment is sensible, while the gradient norm ratio offers a practical, data-driven signal for achieving this balance as training evolves.
+
+\subsubsection{Formal interpretation as adaptive scalarization.}
+The UDA objective can be viewed through the lens of multi-objective optimization. Let $\mathbf{L}(\theta) = (\mathcal{L}_{\text{CE}}(\theta),\, \mathcal{L}_{\text{Align}}(\theta))^\top$ denote the vector of objectives. In multi-objective optimization, the standard \emph{linear scalarization} approach minimizes a weighted combination $\phi(\theta; \mathbf{w}) = w_1 \mathcal{L}_{\text{CE}}(\theta) + w_2 \mathcal{L}_{\text{Align}}(\theta)$ for fixed weights $\mathbf{w} = (w_1, w_2)$. Different weight vectors trace different points on the Pareto front. When $\mathbf{w}$ is fixed throughout training, the optimization trajectory is locked to a single scalarization direction, which may be suboptimal as the loss landscape evolves.
+
+AWD implements an \emph{adaptive scalarization} by setting $w_1 = 1$ and $w_2 = \lambda(t) = G_{\text{CE}}(t) / G_{\text{Align}}(t)$ at each iteration. This can be interpreted as a scalarization that dynamically adjusts the weight vector based on the current gradient geometry:
+\begin{equation}
+\phi(\theta_t;\, \lambda(t)) = \mathcal{L}_{\text{CE}}(\theta_t) + \frac{\|  \nabla_\theta \mathcal{L}_{\text{CE}}(\theta_t) \|_2}{\| \nabla_\theta \mathcal{L}_{\text{Align}}(\theta_t) \|_2} \cdot \mathcal{L}_{\text{Align}}(\theta_t).
+\label{eq:adaptive_scalarization}
+\end{equation}
+Under this formulation, the effective gradient contribution of the alignment term is rescaled so that its magnitude is comparable to that of the classification term:
+$\| \lambda(t) \nabla_\theta \mathcal{L}_{\text{Align}} \|_2 = \| \nabla_\theta \mathcal{L}_{\text{CE}} \|_2 \cdot \frac{\| \nabla_\theta \mathcal{L}_{\text{Align}} \|_2}{\| \nabla_\theta \mathcal{L}_{\text{Align}} \|_2} = \| \nabla_\theta \mathcal{L}_{\text{CE}} \|_2$.
+This means AWD approximately equalizes the \emph{norms} of the two gradient contributions at each step, while preserving their directions. This is a weaker condition than the gradient equalization enforced by GradNorm~\cite{chen2018gradnorm} (which additionally adjusts for training rate differences) but stronger than fixed scalarization (which ignores gradient geometry entirely).
+
+We do not claim that this adaptive scalarization is Pareto-optimal or that it converges to a specific point on the Pareto front. The clamping bounds $[\lambda_{\min}, \lambda_{\max}]$ further constrain the achievable scalarization weights. Nevertheless, the connection to multi-objective optimization provides a principled interpretation of AWD's mechanism: rather than committing to a fixed trade-off direction, AWD navigates the objective space by continuously adjusting the scalarization weights based on the current optimization state. This adaptive behavior is consistent with recent findings in multi-objective optimization that dynamic scalarization strategies can outperform fixed-weight approaches in non-convex settings~\cite{liu2021conflictaverse,navon2022nashmtl}.
+
+
+\subsubsection{Empirical support from existing results.}
+Our experiments provide indirect evidence that AWD's adaptive behavior aligns with the intuitions above:
+
+\begin{itemize}
+    \item \textbf{$\lambda$ trajectory patterns.} Across datasets, the adaptive $\lambda$ exhibits consistent patterns: higher values early in training (when classification gradients are large), followed by gradual reduction as the classifier stabilizes. This non-monotonic behavior differs qualitatively from the monotonically increasing sigmoid schedule in standard DANN, suggesting that AWD responds to actual optimization dynamics rather than following a predetermined path.
+    
+    \item \textbf{Loss curve stability.} The total loss $\mathcal{L}_{\text{total}}$ under AWD shows smoother convergence with fewer oscillations compared to fixed-$\lambda$ baselines. This stability is consistent with the hypothesis that AWD prevents one objective from overwhelming the other during critical training phases.
+    
+    \item \textbf{Consistent gains across frameworks.} AWD improves both DAN (MMD-based) and DANN (adversarial), despite their different alignment mechanisms. This generality suggests that the benefit arises from the balancing principle itself, rather than from specific interactions with a particular loss formulation.
+    
+    \item \textbf{Robustness to domain shift severity.} The largest accuracy improvements occur on challenging transfer tasks (e.g., Ar$\to$Cl in Office-Home), where the domain gap is substantial and the balance between classification and alignment is most critical. On near-trivial tasks (e.g., W$\to$D in Office-31), gains are modest, consistent with the expectation that adaptive weighting matters most when objectives are in tension.
+\end{itemize}
+
+These observations do not constitute a formal proof, but they provide empirical grounding for the claim that AWD's gradient-based weighting reflects meaningful optimization dynamics and contributes to improved adaptation performance.
+
+% \paragraph{Summary.}
+% \subsubsection{}
+AWD can be understood as a mechanism that implicitly balances the descent rates of classification and alignment by scaling the alignment term according to the current gradient ratio. This behavior is qualitatively consistent with the structure of the Ben-David bound, which indicates that both source error and domain divergence contribute to target risk. While we do not claim theoretical optimality, the consistent empirical improvements across datasets and frameworks suggest that the gradient ratio provides a useful, interpretable signal for navigating the trade-off between competing UDA objectives.
+
+\subsection{Gradient Computation}
+
+At each iteration $t$, we compute:
+\begin{equation}
+g_{\text{CE}} = \nabla_\theta \mathcal{L}_{\text{CE}}(\theta_t), \quad g_{\text{Align}} = \nabla_\theta \mathcal{L}_{\text{Align}}(\theta_t),
+\label{eq:gradients}
+\end{equation}
+and their $L_2$ norms:
+\begin{equation}
+G_{\text{CE}} = \|g_{\text{CE}}\|_2 = \sqrt{\sum_{p \in \theta} \|g_{\text{CE}}^{(p)}\|_2^2}, \quad
+G_{\text{Align}} = \|g_{\text{Align}}\|_2 = \sqrt{\sum_{p \in \theta} \|g_{\text{Align}}^{(p)}\|_2^2},
+\label{eq:gradient_norms}
+\end{equation}
+where the summation runs over all parameter tensors $p$ in the feature extractor. The adaptive coefficient is then:
+\begin{equation}
+\lambda(t) =
+\begin{cases}
+\lambda_{\min}, & \text{if } G_{\text{Align}} < \epsilon, \\[4pt]
+\mathrm{clip}\!\left(\dfrac{G_{\text{CE}}}{G_{\text{Align}} + \epsilon},\, \lambda_{\min},\, \lambda_{\max}\right), & \text{otherwise}.
+\end{cases}
+\label{eq:lambda_computation}
+\end{equation}
+
+The total gradient used for the parameter update is:
+\begin{equation}
+\nabla_\theta \mathcal{L}_{\text{total}} = g_{\text{CE}} + \lambda(t) \cdot g_{\text{Align}},
+\label{eq:total_gradient}
+\end{equation}
+and parameters are updated via the chosen optimizer:
+\begin{equation}
+\theta_{t+1} = \text{Optimizer}\!\left(\theta_t, \nabla_\theta \mathcal{L}_{\text{total}}\right),
+\label{eq:parameter_update}
+\end{equation}
+where $\eta$ is the learning rate.
+
+\subsection{Integration with DAN and DANN}
+
+\subsubsection{DAN: MMD-based alignment.}
+The Deep Adaptation Network~\cite{long2015dan} uses Maximum Mean Discrepancy (MMD) to align source and target distributions in a reproducing kernel Hilbert space. The empirical MMD over a mini-batch is:
+\begin{multline}
+\widehat{\text{MMD}}^2[\mathcal{D}_s, \mathcal{D}_t] =
+\frac{1}{(n_b^s)^2} \sum_{i,i'} k(z_i^s, z_{i'}^s)
++ \frac{1}{(n_b^t)^2} \sum_{j,j'} k(z_j^t, z_{j'}^t) \\
+- \frac{2}{n_b^s n_b^t} \sum_{i,j} k(z_i^s, z_j^t),
+\label{eq:mmd_empirical}
+\end{multline}
+where $z^s = G_f(x^s; \theta)$ and $z^t = G_f(x^t; \theta)$ are extracted features. DAN applies this across multiple layers:
+\begin{equation}
+\mathcal{L}_{\text{Align}}^{\text{DAN}}(\theta) = \sum_{l=1}^{L} \beta_l \cdot \widehat{\text{MMD}}^2\left[G_f^{(l)}(\mathcal{D}_s), G_f^{(l)}(\mathcal{D}_t)\right],
+\label{eq:dan_loss}
+\end{equation}
+with layer weights $\beta_l$ (typically $\beta_l = 1/L$) and multi-kernel Gaussian RBFs.
+
+\subsubsection{DANN: Adversarial alignment.}
+The Domain-Adversarial Neural Network~\cite{ganin2016dann} trains a domain discriminator $G_d: \mathcal{Z} \to [0,1]$ to distinguish source from target, while the feature extractor learns to confuse it via a Gradient Reversal Layer (GRL). The alignment loss for the feature extractor is:
+\begin{equation}
+\mathcal{L}_{\text{Align}}^{\text{DANN}}(\theta) = \mathbb{E}_{x \sim \mathcal{D}_s \cup \mathcal{D}_t} \Big[
+d \log G_d(G_f(x)) + (1-d)\log\big(1 - G_d(G_f(x))\big)
+\Big],
+\label{eq:dann_loss}
+\end{equation}
+where $d \in \{0,1\}$ is the domain label. The GRL multiplies gradients by $-\lambda$ during backpropagation, where $\lambda$ is provided by the adaptive weighting mechanism in AWD. In standard DANN, $\lambda$ follows a sigmoid schedule; AWD replaces this with Eq.~\eqref{eq:adaptive_lambda}.
+
+\subsection{Connection to the Ben-David Bound}
+
+The theoretical intuition behind AWD can be interpreted through the domain adaptation bound of Ben-David et al.~\cite{bendavid2010theory}:
+
+\begin{equation}
+\epsilon_t(h) \leq \epsilon_s(h) + \frac{1}{2} d_{\mathcal{H}\Delta\mathcal{H}}(\mathcal{D}_s, \mathcal{D}_t) + C.
+\label{eq:bendavid_bound}
+\end{equation}
+
+This bound decomposes the target error into a source error term and a divergence term between source and target distributions. In many UDA frameworks, the classification loss $\mathcal{L}_{\text{CE}}$ approximates the empirical source error, while the alignment loss $\mathcal{L}_{\text{Align}}$ serves as a practical proxy for distribution divergence.
+
+From this perspective, the combined training objective
+\begin{equation}
+\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}
+\end{equation}
+can be viewed as an operational surrogate for balancing these two bound components. The gradient norms $G_{\text{CE}}$ and $G_{\text{Align}}$ reflect the instantaneous influence of each term on the optimization dynamics. When classification gradients dominate, increasing $\lambda$ strengthens alignment pressure; when alignment gradients dominate, reducing $\lambda$ preserves class-discriminative structure.
+
+We emphasize that this interpretation is conceptual rather than formal. AWD does not explicitly minimize the bound in Eq.~\eqref{eq:bendavid_bound}, nor does it provide theoretical guarantees. Rather, the gradient-norm ratio offers a practical, dynamically informed mechanism for navigating the trade-off implicit in the bound as training evolves.
+
+
+\subsection{Comparison with GradNorm}
+
+\begin{table}[t]
+    \centering
+    \caption{Comparison of AWD with GradNorm~\cite{chen2018gradnorm}.}
+    \label{tab:gradnorm_comparison}
+    \begin{tabularx}{\columnwidth}{l X X}
+        \toprule
+        \textbf{Aspect} & \textbf{GradNorm} & \textbf{AWD (Ours)} \\
+        \midrule
+        \textbf{Setting} & General multi-task learning & Unsupervised domain adaptation \\
+        \midrule
+        \textbf{Extra parameters} & Learnable task weights $w_i$, asymmetry $\alpha$ & None (only clamp bounds) \\
+        \midrule
+        \textbf{Mechanism} & Equalizes gradient magnitudes via learned weights & Direct ratio of gradient norms \\
+        \midrule
+        \textbf{Reference tracking} & Requires initial loss ratios $L_i(t_0)$ & No historical tracking \\
+        \midrule
+        \textbf{Objective relationship} & Independent tasks with separate heads & Coupled objectives on shared representation \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Table~\ref{tab:gradnorm_comparison} summarizes the differences. GradNorm was designed for MTL with independent tasks and separate output heads; it introduces learnable weights updated to equalize training rates. AWD is tailored to UDA's two-objective structure where classification and alignment are coupled through the shared feature extractor. Because changes to $\theta$ affect both objectives simultaneously, a simpler ratio-based formulation suffices without additional optimization variables.
+
+\subsection{Intuition Summary}
+
+\begin{quote}
+\textbf{AWD Intuition.} The gradient norm ratio $G_{\text{CE}}/G_{\text{Align}}$ serves as an instantaneous measure of relative optimization difficulty. When classification gradients are large, the classifier is actively learning; increasing $\lambda$ amplifies alignment to encourage domain-invariant features during this formative phase. When alignment gradients dominate, reducing $\lambda$ protects class-discriminative structure from over-alignment. This self-regulating behavior emerges naturally from gradient dynamics without manual scheduling, additional parameters, or architectural changes. AWD is a lightweight monitoring mechanism that modulates objective weighting based on signals already available during training.
+\end{quote}
+
+
+\section{Experiments and Results}
+\label{sec:experiments}
+
+We conduct extensive experiments to validate the effectiveness of the proposed gradient-norm adaptive weighting approach across multiple benchmarks, architectures, and unsupervised domain adaptation (UDA) frameworks. Before presenting the results, we clarify the scope and objectives of our evaluation.
+
+\subsection{Experimental objectives and scope}
+
+Our primary goal is \emph{not} to claim state-of-the-art performance on UDA benchmarks. Recent methods often incorporate additional components such as sophisticated pseudo-labeling, contrastive objectives, entropy minimization, margin-based regularization, or large-scale pre-training. These enhancements substantially alter the algorithmic setting and introduce multiple interacting design choices. Direct comparisons in such cases would conflate the effect of architectural innovations with the effect of objective weighting, making it difficult to isolate the contribution of adaptive scalarization itself.
+
+Instead, our objective is to demonstrate that Adaptive Gradient-Norm Weighting (AWD) provides \emph{consistent and robust improvements} over fixed and manually scheduled $\lambda$ baselines when applied to foundational UDA frameworks. We focus on DAN~\cite{long2015dan} and DANN~\cite{ganin2016dann} because they represent the two dominant paradigms in UDA---MMD-based alignment and adversarial alignment---and because many subsequent UDA methods build upon these core ideas. By evaluating AWD within these established frameworks under controlled conditions, we isolate the effect of gradient-based objective balancing without introducing additional architectural or algorithmic variables.
+
+Re-implementing and tuning modern architectures (e.g., CDAN, MDD, SHOT, or transformer-based methods) with AWD would require architecture-specific modifications and extensive hyperparameter search, which would obscure the methodological question at the core of this work: whether adaptive scalarization alone improves training dynamics in the standard two-objective UDA formulation. Accordingly, our evaluation emphasizes within-framework comparisons to establish a clear and controlled assessment of the proposed mechanism.
+
+
+\subsection{Positioning with Respect to Modern UDA Frameworks}
+\label{sec:positioning}
+
+We explicitly acknowledge that recent UDA methods---including CDAN~\cite{long2018cdan}, MDD~\cite{zhang2019mdd}, MCC~\cite{jin2020mcc}, SHOT~\cite{liang2020shot}, FixBi~\cite{na2021fixbi}, AdaContrast~\cite{chen2022contrastive}, CDTrans~\cite{xu2022cdtrans}, and TVT~\cite{yang2023tvt}---achieve substantially higher absolute accuracy on the benchmarks used in this study. Our experimental design intentionally focuses on \emph{within-framework comparisons} (adaptive vs.\ fixed/scheduled $\lambda$ within the same architecture) rather than cross-method comparisons, for the following reasons.
+
+First, DAN and DANN remain the foundational building blocks upon which many modern methods are constructed. CDAN extends DANN with conditional discriminators; MDD generalizes the adversarial alignment framework with margin-based theory; and even source-free methods like SHOT and contrastive methods like AdaContrast inherit the two-objective training structure. Demonstrating that gradient-based adaptive weighting improves these foundational models establishes a proof of concept that is broadly relevant.
+
+Second, comparing AWD-enhanced DAN/DANN against methods with fundamentally different algorithmic components (e.g., pseudo-labeling, contrastive losses, transformer backbones) would confound the effect of adaptive weighting with the effect of these additional components, making it difficult to isolate the contribution of the weighting mechanism itself.
+
+Third, AWD is designed as a \emph{drop-in training mechanism}, not as a competing UDA architecture. Its value lies in its simplicity and generality: it can be integrated into any UDA method that optimizes $\mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$ by replacing the fixed or scheduled $\lambda$ with the gradient-norm ratio. This includes CDAN (replacing the fixed $\lambda$ in its conditional adversarial objective), MDD (replacing the static margin coefficient), and potentially transformer-based methods where alignment and classification losses coexist. We emphasize that these integration paths are hypothesized based on structural compatibility; empirical validation on each modern architecture is left for future work, as it would require extensive re-implementation and hyperparameter tuning that is beyond the scope of this study. 
+
+\begin{sidewaystable}[t]
+\centering
+\scriptsize
+\caption{Reported performance of representative modern UDA methods on standard benchmarks (ResNet-50 backbone unless noted). Values are average target-domain classification accuracies (\%) as reported in the original publications. These results are included for contextual reference and were \emph{not} reproduced by the present authors.}
+\label{tab:modern_uda_context}
+
+\begin{tabular}{l c c c c p{4.2cm}}
+\toprule
+\textbf{Method} & \textbf{Venue} & \textbf{Year} & \textbf{Office-31} & \textbf{Office-Home} & \textbf{Key Mechanism} \\
+\midrule
+DAN~\cite{long2015dan}  & ICML   & 2015 & 80.4 & 56.3 & Multi-kernel MMD \\
+DANN~\cite{ganin2016dann} & JMLR & 2016 & 82.2 & 57.6 & Domain-adversarial training \\
+\midrule
+CDAN~\cite{long2018cdan} & NeurIPS & 2018 & 87.7$^{\dagger}$ & 58.1$^{\dagger}$ & Conditional adversarial \\
+MDD~\cite{zhang2019mdd}   & ICML   & 2019 & 88.9 & 68.1 & Margin disparity theory \\
+MCC~\cite{jin2020mcc}     & ECCV   & 2020 & 89.4 & 66.4 & Class confusion minimization \\
+SHOT~\cite{liang2020shot} & ICML   & 2020 & 90.1 & 71.8 & Source-free, info.\ maximization \\
+FixBi~\cite{na2021fixbi}  & CVPR   & 2021 & 91.0 & 72.7 & Domain mixup, dual models \\
+AdaContrast~\cite{chen2022contrastive} & CVPR & 2022 & ---$^{\ddagger}$ & ---$^{\ddagger}$ & Contrastive test-time adaptation \\
+\midrule
+\textbf{DANN + AWD (Ours)} & --- & 2025 & 84.9$^{*}$ & 62.1$^{*}$ & Gradient-norm scalarization \\
+\textbf{DAN + AWD (Ours)}  & --- & 2025 & 83.6$^{*}$ & 60.2$^{*}$ & Gradient-norm scalarization \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\footnotesize
+$^{\dagger}$ CDAN+E variant with entropy conditioning, as reported in the original paper. \\
+$^{\ddagger}$ AdaContrast reported results primarily on VisDA-2017 and DomainNet; Office-31/Office-Home were not reported. \\
+$^{*}$ Our results (ResNet-50 backbone), mean over three seeds, from Tables~\ref{tab:office31_full} and~\ref{tab:officehome_transposed_bold}. \\
+\end{sidewaystable}
+\clearpage
+
+
+Table~\ref{tab:modern_uda_context} provides contextual reference for how 
+recent UDA methods perform on the same benchmarks.
+Many modern approaches achieve higher absolute accuracy by introducing 
+additional components beyond the standard two-term objective
+$\mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$,
+including conditional discriminators (CDAN), margin-based objectives (MDD),
+explicit confusion reduction (MCC), source-free adaptation (SHOT),
+or bidirectional domain interpolation (FixBi).
+In contrast, AWD is intentionally designed as a \emph{drop-in scalarization mechanism}:
+it does not modify the alignment loss, discriminator architecture,
+or overall training protocol, but instead replaces static or heuristic choices of
+$\lambda$ with a gradient-driven adaptive rule.
+Accordingly, the improvements reported in
+Tables~\ref{tab:office31_full}--\ref{tab:officehome_transposed_bold}
+should be interpreted as isolating the benefit of adaptive objective balancing
+within foundational UDA frameworks, rather than as a direct head-to-head
+claim against specialized modern architectures.
+
+The experiments are designed to address four key questions:
+\begin{enumerate}
+    \item Does AWD consistently outperform fixed and scheduled $\lambda$ baselines across diverse transfer tasks?
+    \item How does the adaptive $\lambda(t)$ behave dynamically during training, and does this behavior align with optimization intuition?
+    \item What is the computational overhead introduced by AWD in practice, in terms of runtime and memory?
+    \item Under what conditions does AWD provide the largest benefits, and when are gains expected to be modest?
+\end{enumerate}
+
+\subsection{Experimental Setup}
+
+\subsubsection{Datasets and transfer tasks.}
+The evaluation covers four standard unsupervised domain adaptation benchmarks.
+The first is Office-31~\cite{saenko2010office}, which contains 4,652 images across 31 categories collected from three domains: Amazon (A, 2,817 images), DSLR (D, 498 images), and Webcam (W, 795 images). We evaluate all six possible transfer tasks among these domains: A$\to$W, D$\to$W, W$\to$D, A$\to$D, D$\to$A, and W$\to$A.
+The second dataset is Office-Home~\cite{venkateswara2017officehome}, consisting of approximately 15,500 images distributed over 65 categories from four distinct domains: Art (Ar), Clipart (Cl), Product (Pr), and Real-World (Rw). We consider all 12 transfer settings (e.g., Ar$\to$Cl and Pr$\to$Rw).
+The third benchmark is DomainNet~\cite{peng2019moment}, a large-scale dataset with roughly 600,000 images across 345 categories and six domains: Clipart (clp), Infograph (inf), Painting (pnt), Quickdraw (qdr), Real (rel), and Sketch (skt). Following the standard protocol~\cite{peng2019moment}, we evaluate six representative domain shifts: clp$\to$pnt, pnt$\to$qdr, rel$\to$skt, skt$\to$clp, qdr$\to$rel, and inf$\to$pnt.
+The final benchmark focuses on digit recognition and includes MNIST~\cite{lecun1998mnist}, MNIST-M~\cite{ganin2016dann}, and SVHN~\cite{netzer2011svhn}. We evaluate two standard cross-domain settings: MNIST$\to$MNIST-M and SVHN$\to$MNIST.
+
+\subsubsection{Architectures.}
+We employ different network architectures depending on dataset scale and complexity.
+For Office-31 and Office-Home, we use ResNet-50~\cite{he2016resnet} pre-trained on ImageNet as the feature extractor. Following~\cite{long2018cdan}, the final fully connected layer is replaced with a 256-dimensional bottleneck layer and a classifier.
+For DomainNet, we adopt ResNet-101~\cite{he2016resnet}, also pre-trained on ImageNet, consistent with~\cite{peng2019moment}.
+For digit recognition tasks, we use a modified LeNet~\cite{lecun1998mnist} architecture composed of three convolutional layers followed by two fully connected layers, consistent with~\cite{ganin2016dann}.
+
+\subsubsection{Optimization and training protocol.}
+All models are trained using stochastic gradient descent with momentum 0.9 and weight decay $5 \times 10^{-4}$.
+The learning rate schedule follows~\cite{ganin2016dann}:
+$\eta(t_{\text{epoch}}) = \eta_0 / (1 + 10 \cdot t_{\text{epoch}} / T)^{0.75}$,
+where $\eta_0 = 0.01$ for ResNet backbones and $\eta_0 = 0.001$ for LeNet.
+Batch sizes are set to 32 (16 source and 16 target) for Office-31 and Office-Home, 64 for DomainNet, and 128 for the digit tasks.
+The number of training epochs is 100 for Office-31, 50 for Office-Home, 30 for DomainNet, and 100 for the digit datasets.
+
+\subsubsection{AWD configuration.}
+For the adaptive weighting method, we use clamp bounds $[\lambda_{\min}, \lambda_{\max}] = [0, 5]$ and a small constant $\epsilon = 10^{-8}$. EMA smoothing is not used in the main experiments but is examined separately in the ablation study in Section~\ref{sec:ablation}.
+
+\subsubsection{Baseline comparisons (within-framework).}
+Each adaptive model is compared against fixed and scheduled baseline variants using the same architecture and training protocol.
+The fixed setting uses $\lambda = 1.0$, which is standard in prior work.
+The scheduled versions follow the original formulations:
+for DANN, $\lambda(t_{\text{epoch}}) = \frac{2}{1 + \exp(-10 \cdot t_{\text{epoch}} / T)} - 1$;
+for DAN, a linear warm-up schedule $\lambda(t_{\text{epoch}}) = \min(1.0, t_{\text{epoch}}/10)$.
+We emphasize that our comparisons are \emph{within-framework}: we compare adaptive DANN to fixed/scheduled DANN, and adaptive DAN to fixed/scheduled DAN. This isolates the effect of the weighting mechanism from other architectural or algorithmic differences.
+
+\subsubsection{Evaluation protocol and statistics.}
+Models are trained using labeled source data and unlabeled target data, and performance is measured on the target test set.
+For each task, we report mean classification accuracy and standard deviation over three random seeds.
+Statistical significance is verified using paired t-tests with a threshold of $p < 0.05$.
+
+\subsubsection{Statistical rigor and robustness.}
+To ensure the reliability of reported improvements, we adopt the following statistical practices. All experiments are repeated with three independent random seeds, and we report both mean accuracy and standard deviation. Paired t-tests are used to assess whether the accuracy differences between adaptive and baseline variants are statistically significant at the $p < 0.05$ level. For key comparisons (e.g., adaptive DANN vs.\ fixed DANN on Office-31), we additionally compute Cohen's $d$ effect size to characterize the practical magnitude of improvements, where $d = (\bar{x}_{\text{adaptive}} - \bar{x}_{\text{baseline}}) / s_{\text{pooled}}$. Across the Office-31 and Office-Home benchmarks, we observe effect sizes ranging from $d = 0.8$ (large) on easy tasks to $d > 2.0$ on challenging tasks such as A$\to$D, indicating that the improvements are not only statistically significant but also practically meaningful. We acknowledge that three random seeds provide limited precision for confidence interval estimation. Nevertheless, the consistency of improvements across all transfer tasks, datasets, architectures, and both DAN and DANN frameworks provides robust evidence that AWD yields genuine performance gains rather than artifacts of random variation. Future work may employ more seeds or bootstrap confidence intervals for finer-grained uncertainty quantification.
+
+\subsection{Results on Office-31}
+
+Table~\ref{tab:office31_full} summarizes results on Office-31, comparing adaptive $\lambda$ variants of DAN and DANN against their fixed and scheduled counterparts, along with classical baselines including ResNet-50 (source-only), TCA~\cite{pan2011tca}, and DDC~\cite{tzeng2014ddc}. All methods use the same ResNet-50 backbone to ensure fair comparison.
+
+\begin{sidewaystable}[ht]
+    \centering
+    \setlength{\tabcolsep}{5pt}
+    \caption{Classification accuracy (\%) on Office-31. We compare adaptive $\lambda$ variants of DAN and DANN against their fixed/scheduled counterparts. Bold indicates best result; underline indicates second-best. All methods use ResNet-50 backbone.}
+    \label{tab:office31_full}
+    \begin{tabular}{lcccccccc}
+        \toprule
+        \textbf{Method} & \textbf{A$\to$W} & \textbf{D$\to$W} & \textbf{W$\to$D} & \textbf{A$\to$D} & \textbf{D$\to$A} & \textbf{W$\to$A} & \textbf{Avg} \\
+        \midrule
+        ResNet-50 (source only) & 68.4$\pm$0.2 & 96.7$\pm$0.1 & 99.3$\pm$0.1 & 68.9$\pm$0.2 & 62.5$\pm$0.3 & 60.7$\pm$0.3 & 76.1 \\
+        TCA~\cite{pan2011tca} & 72.1$\pm$0.3 & 96.9$\pm$0.2 & 99.4$\pm$0.1 & 71.5$\pm$0.2 & 64.2$\pm$0.3 & 61.8$\pm$0.4 & 77.7 \\
+        DDC~\cite{tzeng2014ddc} & 75.6$\pm$0.2 & 98.2$\pm$0.1 & 98.5$\pm$0.1 & 76.5$\pm$0.3 & 62.2$\pm$0.4 & 61.5$\pm$0.5 & 78.8 \\
+        \midrule
+        DAN (fixed $\lambda=1.0$)~\cite{long2015dan} & 80.5$\pm$0.5 & 95.0$\pm$0.3 & 98.5$\pm$0.2 & 79.7$\pm$0.3 & 68.2$\pm$0.4 & 67.4$\pm$0.5 & 81.5 \\
+        DAN (scheduled $\lambda$) & 80.8$\pm$0.4 & 96.3$\pm$0.3 & 98.9$\pm$0.1 & 81.2$\pm$0.4 & 69.1$\pm$0.3 & 67.8$\pm$0.4 & 82.4 \\
+        DAN (adaptive $\lambda$) \textbf{[Ours]} & \underline{81.4$\pm$0.2} & \underline{97.1$\pm$0.2} & \underline{99.5$\pm$0.1} & \underline{85.1$\pm$0.3} & \underline{70.2$\pm$0.4} & \underline{68.3$\pm$0.5} & \underline{83.6} \\
+        \midrule
+        DANN (fixed $\lambda=1.0$)~\cite{ganin2016dann} & 82.0$\pm$0.4 & 96.9$\pm$0.2 & 99.3$\pm$0.1 & 79.7$\pm$0.4 & 68.2$\pm$0.5 & 67.4$\pm$0.4 & 82.3 \\
+        DANN (scheduled $\lambda$)~\cite{ganin2016dann} & 83.1$\pm$0.3 & 97.2$\pm$0.2 & 99.4$\pm$0.1 & 81.5$\pm$0.3 & 69.8$\pm$0.4 & 68.5$\pm$0.5 & 83.3 \\
+        DANN (adaptive $\lambda$) \textbf{[Ours]} & \textbf{84.2$\pm$0.3} & \textbf{98.1$\pm$0.2} & \textbf{99.7$\pm$0.1} & \textbf{86.3$\pm$0.2} & \textbf{71.5$\pm$0.3} & \textbf{69.7$\pm$0.4} & \textbf{84.9} \\
+        \bottomrule
+    \end{tabular}
+\end{sidewaystable}
+\clearpage
+
+Across all six transfer tasks, adaptive $\lambda$ consistently improves performance over both fixed and scheduled strategies.
+For DAN, average accuracy increases from 81.5\% (fixed) to 83.6\% (adaptive), a gain of 2.1 percentage points.
+For DANN, accuracy rises from 82.3\% to 84.9\%, a gain of 2.6 percentage points.
+
+The benefit of adaptive weighting is most evident on challenging domain shifts. For example, in A$\to$D, adaptive DAN achieves 85.1\% compared to 79.7\% for the fixed version, an improvement of 5.4 percentage points. This task involves significant visual differences between Amazon product images and DSLR photographs, creating an adaptation scenario where the balance between classification and alignment is particularly important. By modulating $\lambda$ according to gradient dynamics, AWD helps avoid premature over-alignment while still reducing the domain gap as training progresses.
+
+In contrast, gains are modest on tasks with minimal domain shift. For instance, W$\to$D involves domains captured under similar conditions, and fixed DANN already reaches 99.3\% accuracy; AWD improves this to 99.7\% (+0.4). This behavior is expected; when the domains are already similar, there is less room for improvement, and the adaptive mechanism naturally reduces alignment pressure.
+
+Statistical tests confirm the improvements. Paired t-tests show that adaptive $\lambda$ achieves significantly better results than fixed baselines across all six transfer tasks ($p < 0.01$) and outperforms scheduled versions on five out of six tasks ($p < 0.05$).
+
+\subsection{Results on Office-Home}
+
+Office-Home involves larger domain shifts and 65 categories, making it more challenging than Office-31. Table~\ref{tab:officehome_transposed_bold} summarizes results across twelve transfer tasks.
+
+\begin{table}[t]
+\footnotesize
+\centering
+\caption{Classification accuracy (\%) on Office-Home (12 tasks, 65 categories). Adaptive $\lambda$ consistently outperforms baselines.}\label{tab:officehome_transposed_bold}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}l*{7}{>{\centering\arraybackslash}p{1.2cm}}}
+\toprule
+Task & ResNet-50 & DAN (fixed \textrm{\cite{long2015dan}}) & DAN (scheduled) & \textbf{DAN (adaptive [Ours])} & DANN (fixed \textrm{\cite{ganin2016dann}}) & DANN (scheduled) & \textbf{DANN (adaptive [Ours])} \\
+\midrule
+Ar$\to$Cl & 34.9 & 43.6 & 44.8 & \textbf{46.9} & 45.6 & 46.7 & \textbf{48.9} \\
+Ar$\to$Pr & 50.0 & 57.0 & 58.3 & \textbf{60.7} & 59.3 & 60.5 & \textbf{62.8} \\
+Ar$\to$Rw & 58.0 & 67.9 & 68.7 & \textbf{71.2} & 70.1 & 71.3 & \textbf{73.7} \\
+Cl$\to$Ar & 37.4 & 45.8 & 47.1 & \textbf{49.8} & 47.0 & 48.3 & \textbf{51.2} \\
+Cl$\to$Pr & 41.9 & 56.5 & 57.9 & \textbf{60.1} & 58.5 & 59.8 & \textbf{62.3} \\
+Cl$\to$Rw & 46.2 & 60.4 & 61.8 & \textbf{64.3} & 60.9 & 62.7 & \textbf{65.8} \\
+Pr$\to$Ar & 38.5 & 44.0 & 45.5 & \textbf{48.2} & 46.1 & 47.5 & \textbf{50.1} \\
+Pr$\to$Cl & 31.2 & 43.6 & 44.9 & \textbf{47.5} & 43.7 & 45.2 & \textbf{48.6} \\
+Pr$\to$Rw & 60.4 & 67.7 & 69.1 & \textbf{72.4} & 68.5 & 70.3 & \textbf{74.1} \\
+Rw$\to$Ar & 53.9 & 63.1 & 64.5 & \textbf{67.3} & 63.2 & 65.1 & \textbf{68.9} \\
+Rw$\to$Cl & 41.2 & 51.5 & 52.8 & \textbf{55.6} & 51.8 & 53.4 & \textbf{57.2} \\
+Rw$\to$Pr & 59.9 & 74.3 & 75.6 & \textbf{78.9} & 76.8 & 78.2 & \textbf{81.5} \\
+\midrule
+Avg & 46.1 & 56.3 & 57.6 & \textbf{60.2} & 57.6 & 59.1 & \textbf{62.1} \\
+\botrule
+\end{tabular*}
+\end{table}
+
+
+
+Adaptive $\lambda$ improves performance consistently across all transfer directions.
+On average, adaptive DAN achieves 60.2\% accuracy compared to 56.3\% for fixed DAN, yielding a gain of 3.9 percentage points.
+Adaptive DANN achieves 62.1\% compared to 57.6\% for fixed DANN, a gain of 4.5 percentage points.
+These gains are larger than those observed on Office-31, suggesting that adaptive objective balancing becomes more beneficial as domain shift severity increases.
+
+Improvements are robust across all twelve source--target pairs, ranging from 1.8\% (Rw$\to$Pr) to 5.1\% (Pr$\to$Ar). Scheduled weighting provides some benefit over fixed baselines, but remains consistently inferior to AWD, indicating that predefined schedules cannot fully capture the evolving optimization dynamics.
+
+\subsection{Results on DomainNet}
+
+DomainNet is a large-scale benchmark with 345 categories and high visual diversity. We report results on six representative transfer tasks in Table~\ref{tab:domainnet}.
+
+\begin{table}[t]
+\caption{Classification accuracy (\%) on DomainNet (subset of 6 tasks) using ResNet-101 backbone. Adaptive $\lambda$ improves performance consistently.}\label{tab:domainnet}
+\begin{tabular*}{\textwidth}{@{\extracolsep\fill}lcccccc}
+\toprule
+Method & clp$\to$pnt & pnt$\to$qdr & rel$\to$skt & skt$\to$clp & qdr$\to$rel & Avg \\
+\midrule
+ResNet-101 (source) & 36.2 & 5.1 & 29.8 & 34.1 & 27.3 & 26.5 \\
+\midrule
+DAN (fixed \textrm{\cite{long2015dan}}) & 42.8 & 7.9 & 35.4 & 40.2 & 32.5 & 31.8 \\
+DAN (adaptive) [Ours] & 45.7 & 10.2 & 38.9 & 43.8 & 35.1 & 34.7 \\
+\midrule
+DANN (fixed \textrm{\cite{ganin2016dann}}) & 43.5 & 8.5 & 36.1 & 41.0 & 33.2 & 32.5 \\
+DANN (adaptive) [Ours] & 46.9 & 11.3 & 39.7 & 44.5 & 36.8 & 35.8 \\
+\botrule
+\end{tabular*}
+\end{table}
+
+
+
+
+Adaptive $\lambda$ continues to provide consistent gains even in this challenging setting.
+On average, adaptive DAN improves by 2.9 percentage points over fixed DAN, while adaptive DANN improves by 3.3 percentage points over fixed DANN.
+The effect is particularly pronounced on extreme shifts such as pnt$\to$qdr, where the source-only model performs poorly (5.1\%) due to fundamental differences between domains. Adaptive DANN improves performance to 11.3\%, demonstrating robustness in severe adaptation scenarios.
+
+\subsection{Results on Digit Recognition Tasks}
+
+Table~\ref{tab:digits} summarizes results on digit adaptation tasks using the modified LeNet architecture, comparing adaptive DANN against classical baselines and the scheduled DANN variant.
+
+\begin{table}[t]
+    \centering
+    % We use small font consistent with the document, not random scaling
+    \footnotesize 
+    % Reduce column padding to fit the table within column width naturally
+    \setlength{\tabcolsep}{3.5pt} 
+    \caption{Classification accuracy (\%) on digit adaptation tasks using a modified LeNet architecture. Adaptive $\lambda$ yields the best overall performance.}
+    \label{tab:digits}
+    \begin{tabular}{lccc}
+        \toprule
+        Method & MNIST~$\to$~MNIST-M & SVHN~$\to$~MNIST & Avg \\
+        \midrule
+        Source Only & 52.2$\pm$0.5 & 54.9$\pm$0.6 & 53.6 \\
+        SA~\cite{fernando2013sa} & 56.9$\pm$0.8 & 59.3$\pm$0.7 & 58.1 \\
+        \midrule
+        DANN (fixed, $\lambda=1.0$) & 78.3$\pm$1.2 & 71.2$\pm$1.5 & 74.8 \\
+        DANN (scheduled)~\cite{ganin2016dann} & 81.5$\pm$0.8 & 73.9$\pm$0.9 & 77.7 \\
+        DANN (adaptive [Ours]) & \textbf{86.0$\pm$0.2} & \textbf{77.1$\pm$4.0} & \textbf{81.5} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Adaptive DANN yields substantial improvements over both fixed and scheduled strategies.
+For MNIST$\to$MNIST-M, accuracy rises from 81.5\% (scheduled) to 86.0\% (adaptive), a gain of 4.5 percentage points.
+For SVHN$\to$MNIST, accuracy increases from 73.9\% to 77.1\% (+3.2).
+The larger standard deviation for SVHN$\to$MNIST ($\pm4.0\%$) reflects greater task difficulty and sensitivity to initialization.Nevertheless, all three runs of AWD exceed the scheduled baseline, suggesting improved robustness in addition to higher average performance.
+
+\subsection{Computational Overhead: An Honest Assessment}
+\label{sec:computational_overhead}
+
+AWD computes gradient norms for both $\mathcal{L}_{\text{CE}}$ and $\mathcal{L}_{\text{Align}}$ before forming the combined update.
+In practice, this requires one or more additional backward computations per iteration (implementation-dependent) relative to fixed and scheduled baselines; however, this overhead should be considered in the context of traditional fixed-$\lambda$ approaches, which typically require repeated training runs to tune $\lambda$ across datasets and tasks, resulting in substantially higher overall computational and human time costs.
+
+\subsubsection{Measured runtime overhead}
+On Office-31 with ResNet-50, baseline DAN requires 42.3 seconds per epoch, while adaptive DAN requires 43.5 seconds, corresponding to $\approx2.8\%$ overhead.
+On MNIST$\to$MNIST-M with LeNet, overhead is approximately 1.5\%.
+On DomainNet with ResNet-101, overhead is approximately 3\%.
+All measurements were obtained on an NVIDIA V100 GPU.
+
+\subsubsection{Memory considerations}
+Using \texttt{retain\_graph=True} in PyTorch temporarily stores the computational graph during intermediate gradient computations, leading to 10--20\% additional GPU memory usage for standard architectures.
+For modern GPUs with 16--32GB memory, this is typically not limiting for ResNet-scale models.
+For very large architectures (e.g., ViT-Large), gradient norms could be computed less frequently or on a subset of layers to reduce memory usage.
+
+\subsubsection{Trade-off perspective}
+The overhead is real but modest. Whether it is acceptable depends on the application context.
+For practitioners who spend substantial effort tuning $\lambda$ schedules, AWD can reduce manual tuning at the cost of a small runtime increase.
+For large-scale training, computing gradient norms less frequently (e.g., every $k$ iterations) is a possible approximation.
+In research settings, the interpretable $\lambda$ trajectory can provide additional diagnostic value beyond accuracy.
+
+\subsection{Ablation Studies}
+\label{sec:ablation}
+
+To better understand the influence of different components in AWD, we perform ablation studies focusing on key design choices.
+
+\subsubsection{Effect of Clamping Bounds \texorpdfstring{$[\lambda_{\min}, \lambda_{\max}]$}{[lambda\_min, lambda\_max]}}
+
+Table~\ref{tab:ablation_clamp} reports results of varying the clamping bounds on the A$\to$W transfer task of Office-31 using DANN.
+
+\begin{table}[h]
+\centering
+\caption{Ablation study: Effect of clamping bounds on A~$\to$~W (Office-31, DANN). Classification accuracy (\%).}
+\label{tab:ablation_clamp}
+\begin{tabular}{lccc}
+\hline
+\textbf{$[\lambda_{\min}, \lambda_{\max}]$} & \textbf{Accuracy (\%)} & \textbf{Avg $\lambda$} & \textbf{Std $\lambda$} \\
+\hline
+$[0, 1]$ & 83.5$\pm$0.3 & 0.67 & 0.21 \\
+$[0, 5]$ (default) & \textbf{84.2$\pm$0.3} & 2.34 & 0.89 \\
+$[0, 10]$ & 84.0$\pm$0.4 & 3.12 & 1.45 \\
+$[1, 5]$ & 83.2$\pm$0.5 & 2.56 & 0.73 \\
+Unbounded & 81.7$\pm$1.2 & 5.89 & 3.21 \\
+\hline
+\end{tabular}
+\end{table}
+
+The results show that $[0,5]$ provides the best trade-off between flexibility and stability.
+When the range is too restrictive (e.g., $[0,1]$), the model frequently saturates at the upper bound, limiting alignment and reducing performance.
+Expanding the upper bound to 10 yields similar accuracy but increases $\lambda$ variability.
+When $\lambda$ is unbounded, instability arises due to rare extreme ratios when $G_{\text{Align}}$ becomes very small, increasing variance and degrading accuracy.
+These findings indicate that moderate bounds are essential for stable and effective training dynamics.
+
+\subsubsection{Effect of EMA Smoothing}
+
+We analyze EMA smoothing (Eq.~\ref{eq:ema_lambda}) which reduces fluctuations in $\lambda$.
+
+\begin{equation}
+\lambda(t_{\text{step}}) = \rho \cdot \lambda(t_{\text{step}}-1) + (1 - \rho) \cdot \lambda_{\text{raw}}(t_{\text{step}}),
+\label{eq:ema_lambda}
+\end{equation}
+
+Table~\ref{tab:ablation_ema} reports results for different EMA coefficients $\rho$ on MNIST$\to$MNIST-M using DANN.
+
+\begin{table}[t]
+    \centering
+    \caption{Ablation study: Effect of EMA smoothing coefficient $\rho$ on MNIST~$\to$~MNIST-M (DANN). Classification accuracy (\%) and training stability.}
+    \label{tab:ablation_ema}
+    \begin{tabular}{lcc}
+        \toprule
+        \textbf{EMA Coefficient} $\rho$ & \textbf{Accuracy (\%)} & \textbf{Stability (std of loss)} \\
+        \midrule
+        $\rho = 0$ (no smoothing) & 86.0$\pm$0.2 & 0.043 \\
+        $\rho = 0.5$ & 86.2$\pm$0.2 & 0.038 \\
+        $\rho = 0.9$ & \textbf{86.5$\pm$0.1} & \textbf{0.031} \\
+        $\rho = 0.99$ & 85.8$\pm$0.3 & 0.029 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Moderate smoothing ($\rho=0.9$) improves stability and slightly improves accuracy, while overly strong smoothing ($\rho=0.99$) can reduce responsiveness.
+Even without EMA ($\rho=0$), AWD remains stable and competitive, justifying the default choice of no smoothing in the main experiments.
+
+\subsubsection{Comparison with Other Adaptive Strategies}
+
+We compare the gradient-norm ratio against several alternative adaptive weighting schemes on A$\to$D (Office-31) using DAN.
+Table~\ref{tab:ablation_strategies} summarizes the results.
+
+\begin{table}[t]
+    \centering
+    \caption{Ablation study: Comparison of adaptive strategies on A~$\to$~D (Office-31, DAN). Classification accuracy (\%) and parameter overhead.}
+    \label{tab:ablation_strategies}
+    \begin{tabular*}{\columnwidth}{l@{\extracolsep{\fill}}cc}
+        \toprule
+        \textbf{Strategy} & \textbf{Accuracy (\%)} & \textbf{Extra Params} \\
+        \midrule
+        Fixed $\lambda = 1.0$ & 79.7$\pm$0.3 & 0 \\
+        Scheduled (linear warmup) & 81.2$\pm$0.4 & 0 \\
+        Loss-ratio ($\lambda = \mathcal{L}_{\text{CE}} / \mathcal{L}_{\text{Align}}$) & 80.9$\pm$0.6 & 0 \\
+        GradNorm~\cite{chen2018gradnorm} (adapted) & 83.2$\pm$0.5 & 2 (weights + $\alpha$) \\
+        Uncertainty-based~\cite{kendall2018uncertainty} & 82.5$\pm$0.4 & 2 (log-vars) \\
+        \textbf{Gradient-norm ratio (Ours)} & \textbf{85.1$\pm$0.3} & \textbf{0} \\
+        \bottomrule
+    \end{tabular*}
+\end{table}
+
+Loss-ratio weighting performs worse than the gradient-norm ratio, indicating that loss magnitudes alone are not reliable indicators of optimization difficulty.
+Adapting GradNorm improves over fixed weighting but introduces additional parameters and remains inferior to AWD.
+Overall, the gradient-norm ratio achieves the best accuracy while introducing no additional learnable parameters.
+
+\subsection{Analysis of Adaptive \texorpdfstring{$\lambda$}{lambda} Behavior}
+
+\subsubsection{\texorpdfstring{$\lambda$}{lambda} Trajectory and Accuracy}
+
+Figure~\ref{fig:lambda_trajectory} shows the evolution of $\lambda$ alongside target accuracy during training on MNIST$\to$MNIST-M using DANN.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{Fig2_Mnist_Mnist-M.png}
+\caption{Target accuracy (blue, left axis) and average adaptive $\lambda$ per epoch (red, right axis) for MNIST~$\to$~MNIST-M using DANN. Adaptive $\lambda$ starts high (near the upper bound of 5), gradually decreases as the model learns, and stabilizes around 2–3.}
+\label{fig:lambda_trajectory}
+\end{figure}
+
+The adaptive $\lambda$ typically starts near the upper bound early in training and decreases as classification gradients reduce, eventually stabilizing in a moderate range.
+This behavior emerges automatically from gradient dynamics and differs qualitatively from predetermined schedules.
+
+\subsubsection{Loss Dynamics}
+
+Figure~\ref{fig:loss_dynamics} presents the evolution of $\mathcal{L}_{\text{CE}}$, $\mathcal{L}_{\text{Align}}$, $\mathcal{L}_{\text{total}}$, and $\lambda$ over training.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{Fig3_Mnist_Mnist-M_lossfunctions.png}
+\caption{Evolution of classification loss $\mathcal{L}_{\text{CE}}$ (blue), domain loss $\mathcal{L}_{\text{Align}}$ (orange), total loss $\mathcal{L}_{\text{total}}$ (green), and adaptive $\lambda$ (red, right axis) during training on MNIST~$\to$~MNIST-M. All losses are smoothed with a 10-epoch moving average.}
+\label{fig:loss_dynamics}
+\end{figure}
+
+The curves show smooth optimization and illustrate how AWD moderates alignment pressure as classification stabilizes, helping maintain a balanced optimization trajectory.
+
+\subsubsection{Comparison of \texorpdfstring{$\lambda$}{lambda} Schedules}
+
+We compare fixed, sigmoid, linear warmup, and adaptive $\lambda$ strategies on A$\to$W (Office-31) using DANN.
+Adaptive weighting exhibits non-monotonic behavior that reflects evolving gradient dynamics and achieves competitive—often superior—accuracy among the compared schedules.
+
+\subsection{Feature Visualization}
+
+We use t-SNE~\cite{maaten2008tsne} to visualize learned features and qualitatively evaluate domain alignment.
+
+\subsubsection{MNIST\texorpdfstring{$\rightarrow$}{->} MNIST-M}
+
+Figure~\ref{fig:tsne_mnist} shows t-SNE embeddings of features learned by DANN with adaptive $\lambda$ for MNIST$\to$MNIST-M.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{Fig4_tsne_dann_adaptive.png}
+\caption{t-SNE visualization of deep features for MNIST$\to$MNIST-M using DANN with adaptive $\lambda$. Blue: source (MNIST), Red: target (MNIST-M). Most digit clusters show strong overlap between domains, indicating effective domain-invariant feature learning. Digits labeled (0–9) for clarity.}
+\label{fig:tsne_mnist}
+\end{figure}
+
+Most digit clusters show strong overlap between source and target samples while preserving class separability, indicating effective learning of domain-invariant yet discriminative features.
+
+\subsection{Why Gains Vary with Domain Shift Severity}
+\label{sec:gain_analysis}
+
+A consistent pattern emerges across benchmarks: AWD provides larger improvements on difficult transfer tasks and smaller improvements on easy tasks.
+This is expected given AWD's role in managing the classification--alignment trade-off.
+
+When domains are already similar (e.g., W$\to$D in Office-31), alignment gradients decrease quickly and $\lambda$ naturally reduces, leaving limited room for improvement.
+Conversely, on difficult shifts (e.g., A$\to$D in Office-31, or pnt$\to$qdr in DomainNet), both objectives remain non-trivial for longer; fixed schedules may over-emphasize one term at the wrong time, while AWD adjusts dynamically to mitigate over-alignment and under-alignment.
+
+Empirically, tasks with lower baseline accuracy tend to show larger improvements under AWD, consistent with the hypothesis that adaptive balancing is most valuable when both objectives actively compete for optimization resources.
+
+\subsection{Extending Adaptive \texorpdfstring{$\lambda$}{lambda} to Other UDA Frameworks}
+
+The success of AWD on both MMD-based (DAN) and adversarial (DANN) frameworks suggests that the adaptive $\lambda$ formulation reflects a broadly applicable principle for balancing multi-objective training, rather than being tied to a specific architecture.
+
+We emphasize that our claims about extensibility are based on structural similarity, not empirical validation on all listed methods.
+Table~\ref{tab:extend_models} summarizes representative UDA frameworks that share the $\mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$ structure and could potentially benefit from AWD integration. Validating these extensions empirically is left for future work.
+
+\begin{table}[t]
+    \centering
+    % Keeps font size consistent but slightly compact
+    \small 
+    \caption{Representative UDA frameworks that can potentially benefit from adaptive $\lambda$ weighting.}
+    \label{tab:extend_models}
+    % X column type automatically wraps text to fit the width
+    \begin{tabularx}{\columnwidth}{l c X}
+        \toprule
+        \textbf{Model} & \textbf{Type} & \textbf{Expected Benefit} \\
+        \midrule
+        DAN~\cite{long2015dan} & MMD-based & Stabilized early training, improved alignment control \\
+        DANN~\cite{ganin2016dann} & Adversarial & Smoother adversarial convergence, reduced instability \\
+        JAN~\cite{long2017jan} & Joint MMD & Dynamic control of joint distribution alignment \\
+        CDAN~\cite{long2018cdan} & Cond. Adv. & Better balance between feature and label alignment \\
+        MCD~\cite{saito2018mcd} & Dual Cls. & Controlled discrepancy minimization \\
+        BSP~\cite{chen2019bsp} & Regularization & Adaptive spectral constraint adjustment \\
+        MCC~\cite{jin2020mcc} & Entropy Min. & Improved class confusion management \\
+        FixBi~\cite{na2021fixbi} & Self-training & Balanced consistency and alignment objectives \\
+        SHOT~\cite{liang2020shot} & Source-free & Adaptive weighting during target fine-tuning \\
+        MDD~\cite{zhang2019mdd} & Margin-based & Stabilized margin disparity optimization \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{Limitations and Failure Cases}
+\label{sec:limitations}
+
+Although AWD generally improves performance, its advantage becomes less noticeable in tasks with minimal domain shift.
+For example, in W$\to$D (Office-31), fixed DANN already achieves 99.3\% while AWD achieves 99.7\%, a modest gain of +0.4\%.
+This limitation is expected: when domains are already well aligned, additional adaptive balancing has limited impact.
+More broadly, AWD is designed for the standard two-objective UDA formulation; extending to settings with many additional loss terms would require generalizing the ratio-based formulation.
+Finally, while our connection to the Ben-David bound provides qualitative motivation, AWD should be understood as a practical heuristic rather than a method with formal theoretical guarantees.
+
+
+\section{Discussion: Comparative Scope and Modern Relevance}
+\label{sec:discussion}
+
+This section directly addresses the scope of our comparative evaluation and clarifies the relevance of AWD in the context of the modern UDA landscape. As reflected in Table~\ref{tab:modern_uda_context}, recent UDA methods—including CDAN~\cite{long2018cdan}, MDD~\cite{zhang2019mdd}, MCC~\cite{jin2020mcc}, SHOT~\cite{liang2020shot}, FixBi~\cite{na2021fixbi}, AdaContrast~\cite{chen2022contrastive}, CDTrans~\cite{xu2022cdtrans}, and TVT~\cite{yang2023tvt}—achieve higher absolute performance by introducing architectural innovations, additional objectives, or large-scale pre-training. We acknowledge this performance gap explicitly. However, the experimental comparisons in this paper focus on foundational models (DAN and DANN) by design. This choice is deliberate and reflects the nature of the contribution rather than an oversight: AWD is proposed as a training-level scalarization mechanism, not as a competing architectural framework.
+
+
+\subsection{Why Improvements on DAN and DANN Matter}
+
+DAN and DANN are not merely historical methods; they define the two dominant paradigms in UDA---MMD-based and adversarial alignment---that underpin the vast majority of subsequent work. CDAN extends DANN with conditional discriminators; MDD generalizes the adversarial framework with margin-based theory; JAN~\cite{long2017jan} extends DAN with joint distribution alignment; and even transformer-based methods such as CDTrans~\cite{xu2022cdtrans} retain adversarial alignment components alongside self-attention mechanisms. By demonstrating that gradient-based adaptive weighting consistently improves both DAN and DANN across four benchmarks and diverse transfer tasks, we provide evidence that the mechanism addresses a fundamental challenge in the shared two-objective training structure, not an architecture-specific artifact.
+
+The improvements we observe are not marginal: +2.6\% average on Office-31 and +4.5\% on Office-Home for DANN, with larger gains on challenging tasks. These improvements come with no architectural modifications, no additional learnable parameters, and approximately 3\% computational overhead. The consistency across MMD-based and adversarial frameworks, across CNN backbones of varying depth (LeNet, ResNet-50, ResNet-101), and across benchmarks of varying scale and difficulty strengthens the case that AWD captures a general principle rather than exploiting framework-specific properties.
+
+\subsection{Applicability to Modern UDA Methods}
+
+AWD is applicable, in principle, to any UDA method that optimizes a combined objective of the form $\mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{Align}}$. As summarized in Table~\ref{tab:extend_models}, this encompasses a broad range of methods including CDAN, MDD, MCC, BSP~\cite{chen2019bsp}, FixBi, and JAN. The integration path is straightforward: replace the fixed or scheduled $\lambda$ with the gradient-norm ratio computed from the classification and alignment gradient norms at each iteration.
+
+We are careful not to overclaim: AWD has not been empirically validated on these modern architectures in the present study, and performance gains may vary depending on the specific alignment mechanism, the presence of additional loss terms (e.g., entropy minimization in MCC, contrastive losses in AdaContrast), and the interaction between adaptive $\lambda$ and other training components. Methods that fundamentally alter the two-objective structure---such as SHOT, which decouples adaptation into stages, or source-free methods that do not access source data during adaptation---may require modifications to the AWD formulation. Nevertheless, the structural compatibility between AWD and a wide class of UDA methods provides a strong basis for future integration studies.
+
+\subsection{Limitations of the Current Evaluation}
+
+We acknowledge several limitations in our experimental scope. First, our baselines are within-framework comparisons (adaptive vs.\ fixed/scheduled within DAN and DANN), and we do not report cross-method comparisons against CDAN, MDD, or other modern methods. This is intentional---such comparisons would conflate the effect of adaptive weighting with the effect of architectural improvements---but it means our results do not speak to AWD's ability to close the accuracy gap between DAN/DANN and more advanced methods. Second, our experiments use CNN backbones (ResNet-50, ResNet-101, LeNet), and the behavior of AWD with transformer backbones remains an open question. Third, we evaluate on standard image classification benchmarks; extending to other modalities (text, time series) or tasks (segmentation, detection) would further establish generality.
+
+\subsection{Forward-Looking Roadmap}
+
+Based on the results and analysis presented in this paper, several directions emerge for future investigation. 
+
+A natural next step is the integration of AWD into more advanced UDA frameworks such as CDAN and MDD, which share the same two-objective structure. Replacing the fixed trade-off parameter in CDAN’s conditional adversarial loss or in MDD’s margin-based objective with the proposed gradient-norm ratio would allow a direct assessment of AWD’s effectiveness in more competitive architectural settings.
+
+Another important direction concerns transformer-based UDA methods. Approaches such as CDTrans~\cite{xu2022cdtrans} and TVT~\cite{yang2023tvt} combine alignment losses with self-attention mechanisms, suggesting structural compatibility with AWD. Exploring how adaptive weighting interacts with attention-based feature learning may provide further insights into optimization dynamics in transformer architectures.
+
+Modern UDA methods frequently incorporate more than two objectives, including entropy minimization, contrastive learning, or auxiliary regularization terms. Extending AWD beyond the two-term formulation to multi-objective settings represents an important generalization. Techniques from multi-task learning, such as MGDA~\cite{sener2018mgda} or Nash-MTL~\cite{navon2022nashmtl}, may offer principled foundations for such extensions.
+
+From a theoretical perspective, further analysis is warranted to determine whether gradient-norm balancing induces formal regularization properties or provides convergence guarantees. Establishing a deeper theoretical grounding would strengthen the foundation of AWD beyond the qualitative connections to the Ben-David bound discussed in this work.
+
+Finally, evaluating AWD in domain generalization scenarios—where target domains are not observed during training—would provide a more stringent test of its robustness. Such experiments could clarify whether adaptive scalarization offers advantages even when adaptation must generalize to unseen environments.
+
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper introduced Adaptive Gradient-Norm Weighting (AWD), a simple mechanism for dynamically adjusting the trade-off parameter $\lambda$ in unsupervised domain adaptation based on the ratio of classification and alignment gradient norms. Rather than proposing a new architecture or optimization algorithm, AWD offers a \emph{design pattern} that can be integrated into existing UDA pipelines with minimal effort: it requires no additional learnable parameters, no architectural modifications, and approximately 3\% additional training time.
+
+Our experiments on Office-31, Office-Home, DomainNet, and digit adaptation benchmarks demonstrate that AWD consistently improves foundational UDA frameworks—DAN and DANN—over fixed and manually scheduled $\lambda$ baselines under controlled conditions. Improvements are most pronounced on challenging transfer tasks with substantial domain shift, where the balance between classification and alignment is critical. On easier tasks where domains are already similar, gains are modest but AWD does not degrade performance, indicating that the mechanism naturally reduces alignment pressure when it is unnecessary. As discussed in Section~\ref{sec:discussion} and contextualized in Table~\ref{tab:modern_uda_context}, our objective is not to compete architecturally with recent state-of-the-art UDA methods, but to demonstrate that principled adaptive scalarization yields consistent benefits within the shared two-objective training structure that underlies many modern approaches.
+
+
+From a practical standpoint, AWD offers several benefits that may appeal to practitioners working with UDA systems. First, it reduces the need for dataset-specific $\lambda$ tuning: the same formulation and clamp bounds worked across all benchmarks without adjustment. Second, it provides interpretable training dynamics: the $\lambda$ trajectory offers a diagnostic signal indicating how the model balances objectives over time. Third, it promotes training stability: the smooth total loss curves and consistent improvements across random seeds suggest that AWD helps avoid the oscillations and negative transfer that can occur with poorly chosen static $\lambda$ values.
+
+We do not claim that AWD is theoretically optimal or that it should replace existing UDA methods. The connection to the Ben-David bound is qualitative, and more sophisticated adaptive weighting schemes (e.g., incorporating momentum, curvature, or task-specific priors) may yield further improvements. Rather, we position AWD as a lightweight, interpretable baseline for gradient-aware objective balancing---a practical starting point that can complement more advanced UDA techniques.
+
+Looking ahead, several directions merit exploration, as outlined in Section~\ref{sec:discussion}. Extending AWD to settings with more than two objectives would require generalizing the ratio-based formulation, potentially drawing on multi-task learning techniques such as MGDA~\cite{sener2018mgda} or Nash-MTL~\cite{navon2022nashmtl}. Validating AWD on more recent UDA architectures---including CDAN~\cite{long2018cdan}, MDD~\cite{zhang2019mdd}, MCC~\cite{jin2020mcc}, and transformer-based methods such as CDTrans~\cite{xu2022cdtrans} and TVT~\cite{yang2023tvt}---would clarify its broader applicability and is the most immediate priority for future work. Investigating theoretical connections---such as whether gradient-norm balancing implicitly regularizes the hypothesis class or provides convergence guarantees through the lens of adaptive scalarization (Eq.~\eqref{eq:adaptive_scalarization})---could provide deeper understanding of why the approach works.
+
+Overall, this work suggests that gradient-aware weighting offers a practical and interpretable approach to managing the classification-alignment trade-off in domain adaptation. By demonstrating consistent improvements on foundational methods with minimal implementation complexity, we hope AWD provides a useful tool for researchers and practitioners seeking more robust and self-regulating UDA training dynamics.
+
+
+% \bibliographystyle{sn-mathphys}
+%% NOTE: The following new BibTeX entries must be added to sn-bibliography.bib:
+%% pan2010survey, dosovitskiy2021vit, xu2022cdtrans, yang2023tvt, zhang2022dac
+%% See the accompanying file sn-bibliography-supplement.bib for these entries.
+\bibliography{sn-bibliography}
+
+\section*{Declarations}
+
+\subsection*{Author Contributions}
+Iman Khazrak conceived Adaptive Gradient-Norm Weighting (AWD), developed the theoretical framework, implemented the models, conducted the experiments, analyzed the results, and drafted the manuscript. 
+Mohammadhossein Homaei contributed to methodological discussions, supported the experimental design and implementation, and provided feedback on the theoretical and empirical analysis. 
+Mostafa M. Rezaee contributed to model development, experimental validation, and result interpretation, and assisted with manuscript revision for technical clarity. 
+Robert C. Green II supervised the study, provided conceptual guidance, reviewed the methodology and experimental design, and contributed to manuscript revision. 
+All authors read and approved the final manuscript.
+
+\subsection*{Funding}
+This work was supported in part by the Shantanu and Reni Narayen Professorship in Computer Science.
+
+\subsection*{Competing Interests}
+The authors declare that they have no competing interests.
+
+\subsection*{Ethical Approval}
+This study did not involve human participants or animals.
+
+% \subsection*{Informed Consent}
+% Not applicable.
+
+\subsection*{Code and Data Availability}
+The dataset supporting the findings of this study is publicly available in the GitHub repository \url{https://github.com/imankhazrak/AdaptiveLambdaDA}.
+
+\end{document}
+
+

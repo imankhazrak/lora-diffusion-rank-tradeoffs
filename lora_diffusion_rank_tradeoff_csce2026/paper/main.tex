@@ -1,38 +1,31 @@
-\documentclass[11pt]{article}
+\documentclass[pdflatex,sn-mathphys-num]{Springer_format/sn-jnl}
 
-\usepackage[margin=1in]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{microtype}
+\let\orcidlogo\relax
+\usepackage{orcidlink}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{booktabs}
 \IfFileExists{siunitx.sty}{\usepackage{siunitx}}{\newcommand{\num}[1]{##1}}
 \usepackage{graphicx}
-\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{url}
 
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue,
-  citecolor=blue,
-  urlcolor=blue
-}
-
-\title{Understanding LoRA Rank Trade-offs in Diffusion Model Fine-Tuning}
-\author{
-  First Author\thanks{Department, Institution, City, Country. Email: author1@example.edu}
-  \and
-  Second Author\thanks{Department, Institution, City, Country. Email: author2@example.edu}
-}
-\date{}
-
 \begin{document}
-\maketitle
+
+\title[LoRA Rank Trade-offs in Diffusion Fine-Tuning]{Understanding LoRA Rank Trade-offs in Diffusion Model Fine-Tuning}
+
+\author*[1]{\fnm{Iman} \sur{Khazrak \orcidlink{0000-0001-7087-2283}}}\email{ikhazra@bgsu.edu}
+\author[2]{\fnm{Narges} \sur{Nejad \orcidlink{0000-0001-7682-7010}}}\email{narges.nejad@angelo.edu}
+
+% \author[3]{\fnm{Mohammadhossein} \sur{Homaei \orcidlink{0000-0002-6108-6632}}}\email{homaei@ieee.org}
+\author[1]{\fnm{Mostafa} \sur{M. Rezaee \orcidlink{0000-0002-0849-3650}}}\email{mostam@bgsu.edu}
+\author[1]{\fnm{Robert} \sur{C. Green II \orcidlink{0000-0002-3792-2725}}}\email{greenr@bgsu.edu}
+
+\affil[1]{\orgdiv{Department of Computer Science}, \orgname{Bowling Green State University}, \city{Bowling Green}, \state{OH}, \country{USA}}
+% \affil[3]{\orgdiv{Department of Information Systems and Telematics Engineering}, \orgname{University of Extremadura}, \orgaddress{\city{Caceres}, \state{Extremadura}, \country{Spain}}}
+\affil[2]{\orgdiv{Department of Management and Marketing}, \orgname{Angelo State University}, \orgaddress{\city{San Angelo}, \state{TX}, \country{USA}}}
 
 % ============================================================
 %  Understanding LoRA Rank Trade-offs in Diffusion Model Fine-Tuning
@@ -40,64 +33,90 @@
 % ============================================================
 
 % ============================================================
-\begin{abstract}
-  % ============================================================
-  Selecting the LoRA rank for diffusion model fine-tuning is a practical systems problem:
-  higher ranks increase trainable capacity and adaptation cost, while lower ranks improve
-  efficiency but may underfit. We present an empirical engineering study of LoRA rank
-  trade-offs under controlled training budgets in diffusion fine-tuning. Our primary
-  evaluation uses a DDPM U-Net backbone on CIFAR-10 with LoRA ranks \(\{2, 4, 8, 16, 32\}\)
-  under fixed optimization settings, and reports parameter counts, runtime, GPU memory, and
-  image quality measured by FID. We then strengthen the analysis with two targeted
-  validations: (i) an extended-budget DDPM setting (ranks 4, 8, 16; 20 epochs), and (ii) a
-  lightweight Tiny DiT validation (ranks 4, 8, 16; 10 epochs). All experiments use a
-  local-folder \texttt{pytorch-fid} protocol with a reproducible CIFAR-10 test reference
-  and 2000 generated evaluation samples per rank.
+\abstract{
+Selecting LoRA rank for diffusion fine-tuning requires balancing quality and
+compute cost. We present a controlled study on CIFAR-10 using a DDPM U-Net
+with ranks \(\{2,4,8,16,32\}\), fixed optimization settings, and a reproducible
+local-folder \texttt{pytorch-fid} protocol. We report FID, trainable parameters,
+runtime, and GPU memory, then validate trends with extended-budget DDPM runs
+(20 epochs; ranks 4/8/16) and a Tiny DiT backbone (10 epochs; ranks 4/8/16).
+Results show moderate ranks are most efficient: rank 4 achieves the best DDPM
+FID (\num{124.1380}), rank 8 is close (\num{124.2136}), and higher ranks provide
+limited gains despite larger adaptation cost. These findings support
+small-to-moderate ranks as practical defaults under fixed training budgets.
+}
+
+\keywords{Diffusion Models, LoRA, Parameter-Efficient Fine-Tuning, Rank Selection, Fr\'{e}chet Inception Distance}
+
+{\let\newpage\relax\maketitle}
+\noindent\textbf{Submission Type:} Regular Research Paper
   
-  Across controlled DDPM runs, moderate ranks provide the most favorable efficiency-quality
-  trade-off: rank 4 attains the best FID (\num{124.1380}), rank 8 is competitive
-  (\num{124.2136}), and higher ranks show diminishing returns despite larger trainable
-  parameter budgets. In extended-budget DDPM validation, rank 16 improves only modestly
-  (\(\approx\)0.68\% relative FID gain from 10 to 20 epochs), without overturning the
-  moderate-rank trend. Tiny DiT validation exhibits a similar ordering, with moderate ranks
-  again outperforming rank 16. These results support a practical, reproducible guideline:
-  under constrained and fixed budgets, small-to-moderate LoRA ranks are often a strong first
-  choice for diffusion fine-tuning.
-  \end{abstract}
+\newpage
+
   
   % ============================================================
   \section{Introduction}
   \label{sec:intro}
   % ============================================================
-  
-  Diffusion models have emerged as a compelling foundation for image generation, yet
-  end-to-end fine-tuning of these models remains computationally demanding in practical
-  settings. Parameter-efficient fine-tuning (PEFT) methods alleviate this burden by
-  restricting gradient updates to a small subset of parameters rather than the full backbone.
-  Among available PEFT approaches, Low-Rank Adaptation (LoRA) is particularly attractive for
-  diffusion fine-tuning: it is straightforward to implement, integrates naturally with modern
-  tooling, and exposes a single interpretable hyperparameter---rank $r$---that directly
-  governs adaptation capacity \cite{hu2022lora}.
-  
-  In practice, however, selecting an appropriate LoRA rank remains a non-trivial decision.
-  Very low ranks may restrict representational flexibility and limit the model's ability to
-  adapt to new distributions, while unnecessarily large ranks increase trainable parameter
-  counts, memory pressure, and runtime without commensurate quality improvements. Despite
-  growing interest in diffusion model adaptation, existing literature largely emphasizes model
-  quality and architectural scaling, offering limited controlled guidance on rank selection
-  for reproducible fine-tuning pipelines \cite{ho2020ddpm, peebles2023dit}. This gap is
-  especially consequential in resource-constrained settings where training budgets are fixed
-  and experimental reproducibility is a hard requirement.
-  
-  This paper addresses that gap through a controlled empirical study of LoRA rank trade-offs
-  in diffusion fine-tuning. We conduct a primary sweep over ranks $\{2, 4, 8, 16, 32\}$
-  using a DDPM U-Net backbone on CIFAR-10, then assess trend stability through two focused
-  validations: extended DDPM training at ranks $\{4, 8, 16\}$ over 20 epochs, and a second
-  lightweight backbone (Tiny DiT) at ranks $\{4, 8, 16\}$ over 10 epochs. Quality is
-  measured via FID using a reproducible local \texttt{pytorch-fid} protocol, alongside
-  parameter efficiency, runtime, and memory metrics. Optimization settings are held fixed
-  across all ranks to isolate the effect of rank under a controlled training budget, rather
-  than to identify per-rank hyperparameter optima.
+
+Diffusion models have emerged as a compelling foundation for image generation, achieving
+strong performance across a range of visual synthesis tasks \cite{ho2020ddpm,
+peebles2023dit}. In many practical deployment scenarios, however, the goal is not to train
+a diffusion model from scratch but to adapt a pretrained backbone to a new data
+distribution, style, or domain. End-to-end fine-tuning of full diffusion backbones remains
+computationally demanding: updating all parameters requires maintaining gradients and
+optimizer states for every weight in the network, which quickly becomes prohibitive under
+limited compute budgets. This has motivated a growing interest in parameter-efficient
+fine-tuning (PEFT) methods, which constrain adaptation to a small, structured subset of
+parameters while leaving the pretrained backbone largely intact.
+
+Among available PEFT approaches, Low-Rank Adaptation (LoRA) has become particularly
+prevalent in diffusion fine-tuning workflows \cite{hu2022lora}. Its appeal stems from
+several practical properties: it requires no changes to the inference architecture, trained
+adapters can be merged directly into the base weights, and the adaptation budget is
+controlled by a single interpretable hyperparameter---the rank $r$---that determines the
+expressivity of the low-rank weight update. These properties make LoRA easy to adopt in
+existing pipelines and straightforward to reason about from a systems perspective.
+
+Despite its widespread use, the relationship between LoRA rank and fine-tuning quality
+in diffusion models is not well characterized under controlled conditions. In practice,
+rank selection is often treated informally: practitioners may default to a fixed rank
+borrowed from language model fine-tuning literature, or sweep a small range of values
+without systematic reporting. This informal treatment obscures an important empirical
+question: under a fixed training budget with uniform optimization settings, how does rank
+actually affect adaptation quality, parameter efficiency, memory, and runtime? The answer
+is non-obvious. Very low ranks limit the expressivity of the adapter, potentially
+underfitting the target distribution. Conversely, unnecessarily large ranks increase
+trainable parameter counts and memory pressure without guaranteed quality gains, and may
+in fact degrade performance if the optimizer cannot effectively utilize the expanded
+capacity within the available budget.
+
+Existing diffusion literature provides limited controlled guidance on this question.
+Prior work has largely focused on model quality at scale, novel architectural designs, or
+improved sampling procedures \cite{ho2020ddpm, peebles2023dit}, rather than on the
+practical engineering problem of rank selection under reproducible and resource-constrained
+conditions. Recent work on adaptive rank allocation \cite{zhang2023adalora,
+chang2025elalora} has demonstrated that layer-wise rank heterogeneity can improve
+efficiency, and rank-stabilized scaling \cite{kalajdzievski2023rslora} has shown that
+standard LoRA scaling can impede learning at higher ranks. These contributions are
+valuable, but they introduce additional complexity that makes it difficult to isolate the
+baseline effect of rank under a simple, uniform training regime. A controlled empirical
+study of static rank selection---one that holds all other variables fixed---remains a
+useful and underserved reference point for practitioners.
+
+This paper addresses that gap through a controlled empirical study of LoRA rank
+trade-offs in diffusion fine-tuning. We conduct a primary rank sweep over
+$r \in \{2, 4, 8, 16, 32\}$ using a DDPM U-Net backbone on CIFAR-10, reporting quality
+(FID), trainable parameter counts, wall-clock runtime, and GPU memory under fixed
+optimization settings. We then assess whether the observed trends are robust to two
+sources of variation: additional training budget (extended 20-epoch DDPM runs at ranks
+$\{4, 8, 16\}$) and architectural differences (a lightweight Tiny DiT backbone at ranks
+$\{4, 8, 16\}$ for 10 epochs). Throughout, we use a local \texttt{pytorch-fid} protocol
+with a fixed CIFAR-10 test reference to ensure evaluation consistency across all
+experimental conditions. The study is intentionally scoped as a controlled engineering
+analysis rather than a claim of state-of-the-art performance: optimization settings are
+held fixed across ranks to isolate the effect of rank as a systems variable, and all
+findings are interpreted accordingly.
   
   This work makes the following contributions:
   \begin{itemize}[leftmargin=1.5em]
@@ -178,15 +197,7 @@ The remainder of this paper is organized as follows. Section~2 reviews related w
   evidence is directly relevant for practitioners who require reproducible baselines before
   committing to more complex adaptive strategies.
   
-  Open-source frameworks have substantially lowered the barrier to reproducible diffusion
-  experimentation. Hugging Face Diffusers \cite{vonplaten2022diffusers} provides consistent
-  implementations of models and noise schedulers across a wide range of architectures,
-  enabling fair cross-study comparisons. Reproducible image-quality evaluation commonly
-  relies on the Fr\'{e}chet Inception Distance (FID) \cite{heusel2017fid}, while CIFAR-10
-  remains a widely used controlled benchmark that facilitates rapid and resource-efficient
-  comparative studies \cite{krizhevsky2009cifar}. The present study builds directly on these
-  foundations, employing a local \texttt{pytorch-fid} protocol with a fixed CIFAR-10 test
-  reference to ensure evaluation consistency across all experimental tracks.
+  Open-source frameworks have substantially lowered the barrier to reproducible diffusion experimentation. Hugging Face Diffusers~\cite{vonplaten2022diffusers} provides consistent implementations of models and noise schedulers across a wide range of architectures, enabling fair cross-study comparisons. Reproducible image-quality evaluation commonly relies on the Fr\'echet Inception Distance (FID)~\cite{heusel2017fid}, while CIFAR-10 remains a widely used controlled benchmark that facilitates rapid and resource-efficient comparative studies~\cite{krizhevsky2009learning}. Recent studies have also explored diffusion-based generative modeling in medical imaging applications, including augmentation for small and imbalanced datasets~\cite{khazrak2025addressing} and synthetic-image-assisted vocal fold pathology classification using DDPM-generated images~\cite{khazrak2025feasibility}. The present study builds directly on these foundations, employing a local \texttt{pytorch-fid} protocol with a fixed CIFAR-10 test reference to ensure evaluation consistency across all experimental tracks.
   
   % ============================================================
   \section{Problem Statement and Background}
@@ -370,19 +381,38 @@ The remainder of this paper is organized as follows. Section~2 reviews related w
   this point, illustrating that increasing trainable parameters does not yield monotonic FID
   improvement under fixed budgets.
   
-  \begin{figure}[t]
-    \centering
-    \includegraphics[width=0.85\linewidth]{../outputs/figures/fid_vs_rank.png}
-    \caption{Main DDPM sweep: FID versus LoRA rank.}
-    \label{fig:fid_vs_rank}
-  \end{figure}
+  % \begin{figure}[t]
+  %   \centering
+  %   \includegraphics[width=0.85\linewidth]{../outputs/figures/fid_vs_rank.png}
+  %   \caption{Main DDPM sweep: FID versus LoRA rank.}
+  %   \label{fig:fid_vs_rank}
+  % \end{figure}
   
+  % \begin{figure}[t]
+  %   \centering
+  %   \includegraphics[width=0.85\linewidth]{../outputs/figures/fid_vs_trainable_params.png}
+  %   \caption{Main DDPM sweep: FID versus trainable parameters.}
+  %   \label{fig:fid_vs_trainable}
+  % \end{figure}
+
   \begin{figure}[t]
     \centering
-    \includegraphics[width=0.85\linewidth]{../outputs/figures/fid_vs_trainable_params.png}
-    \caption{Main DDPM sweep: FID versus trainable parameters.}
-    \label{fig:fid_vs_trainable}
-  \end{figure}
+    
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../outputs/figures/fig1_fid_vs_rank.png}
+        \caption{Main DDPM sweep: FID versus LoRA rank.}
+        \label{fig:fid_vs_rank}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../outputs/figures/fig2_fid_vs_trainable_params.png}
+        \caption{Main DDPM sweep: FID versus trainable parameters.}
+        \label{fig:fid_vs_trainable}
+    \end{minipage}
+    
+\end{figure}
   
   Runtime and memory overhead scale modestly but consistently with rank (Table~\ref{tab:main_ddpm}),
   while quality gains saturate quickly after rank 4. This asymmetry between resource cost
@@ -423,7 +453,7 @@ The remainder of this paper is organized as follows. Section~2 reviews related w
   
   \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{../outputs/figures/ddpm_fid_10_vs_20_epoch.png}
+    \includegraphics[width=0.75\linewidth]{../outputs/figures/fig3_ddpm_10_vs_20_epoch.png}
     \caption{DDPM comparison at 10 vs.\ 20 epochs for ranks 4, 8, and 16.}
     \label{fig:ddpm_10_20}
   \end{figure}
@@ -464,7 +494,7 @@ The remainder of this paper is organized as follows. Section~2 reviews related w
   
   \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\linewidth]{../outputs/figures/ddpm_vs_tiny_dit_fid_rank4_8_16.png}
+    \includegraphics[width=0.9\linewidth]{../outputs/figures/fig4_ddpm_vs_tiny_dit.png}
     \caption{Backbone comparison: DDPM (20 epochs) vs.\ Tiny DiT (10 epochs) for ranks
     4, 8, and 16.}
     \label{fig:ddpm_vs_tiny}
@@ -618,7 +648,7 @@ The remainder of this paper is organized as follows. Section~2 reviews related w
   % \textit{AAAI}, 2026.
   
   % \end{thebibliography}
-\bibliographystyle{plain}
+% \bibliographystyle{sn-mathphys}
 \bibliography{references}
 
 \end{document}
